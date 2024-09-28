@@ -5,13 +5,36 @@ const trendingMovies = ref([]);
 const errorMessage = ref(''); 
 const currentSlide = ref(0); 
 const itemsPerView = 7; 
+const bannerImage = ref("");
 
+const images = [
+  'https://image.tmdb.org/t/p/original/9n2tJBplPbgR2ca05hS5CKXwP2c.jpg',
+  'https://image.tmdb.org/t/p/original/5N8LOeRzt7LcZIhPbNVaCsVOPdT.jpg',//
+  'https://image.tmdb.org/t/p/original/8rmx3Wh6fQdSL2nzTmdFn9thcK8.jpg',//
+  'https://image.tmdb.org/t/p/original/xcXALwBjdHIjrESpGVhghqj8fGT.jpg',//
+  'https://image.tmdb.org/t/p/original/ctMserH8g2SeOAnCw5gFjdQF8mo.jpg',//
+  'https://image.tmdb.org/t/p/original/qUOJGvH8L31HL2b9Q6DGNPGCCI0.jpg',//
+  'https://image.tmdb.org/t/p/original/tfw5LKySp7uEYJ3CUuD4TKx3s8y.jpg',//
+  'https://image.tmdb.org/t/p/original/dKqa850uvbNSCaQCV4Im1XlzEtQ.jpg',//
+  'https://image.tmdb.org/t/p/original/e3h0knvtz4qPg9dwYdWynALrW9s.jpg',//
+  'https://image.tmdb.org/t/p/original/9xfDWXAUbFXQK585JvByT5pEAhe.jpg',//
+  'https://image.tmdb.org/t/p/original/hoVj2lYW3i7oMd1o7bPQRZd1lk1.jpg',//
+  'https://image.tmdb.org/t/p/original/46FRuCeAn6TrS4F1P4F9zhyCpyo.jpg',
+  'https://image.tmdb.org/t/p/original/tt79dbOPd9Z9ykEOpvckttgYXwH.jpg',
+  'https://image.tmdb.org/t/p/original/npD65vPa4vvn1ZHpp3o05A5vdKT.jpg',
+  'https://image.tmdb.org/t/p/original/zZ3Cv1lz61V9OXXvtCPVtCFTVP7.jpg',
+  'https://image.tmdb.org/t/p/original/xpba0Dxz3sxV3QgYLR8UIe1LAAX.jpg',
+  'https://image.tmdb.org/t/p/original/9YDXLJnp2N62uicerbvK2zGhetP.jpg',
+  'https://image.tmdb.org/t/p/original/u7OpeS4eckBSR1wFxFTuyy3FjHE.jpg',
+  'https://image.tmdb.org/t/p/original/ctxm191q5o3axFzQsvNPlbKoSYv.jpg',
+  'https://image.tmdb.org/t/p/original/u0BDggs80FG9tyZwxWTzVTDQls0.jpg',
+  'https://image.tmdb.org/t/p/original/pQvqGK6KQDILL7SJrhMQsRvJfLB.jpg',
+  'https://image.tmdb.org/t/p/original/SqAZjEqqBAYvyu3KSrWq1d0QLB.jpg',
+  'https://image.tmdb.org/t/p/original/6UH52Fmau8RPsMAbQbjwN3wJSCj.jpg',
+];
 
 onMounted(async () => {
-  //HOOOOOMEEE
-
-
-  ///TRENDINGGG AYAYYA
+  bannerImage.value = images[Math.floor(Math.random() * images.length)];
   try {
     const myHeaders = new Headers();
     myHeaders.append("Authorization", "Bearer eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiJjMWJiNjZjYTgxNzA5NjZkMjFmMjI4ZWJmOWI0ZmI4NCIsIm5iZiI6MTcyNzQ4MzQxOC4yNDg0OTcsInN1YiI6IjY2ZjMxOGYzMDIyMDhjNjdjODhkYWM4MCIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.PPx1NhvNRGrVg-ew1jWZ-bd1ljPhaE-UiKUBJNh3vEc");
@@ -48,6 +71,12 @@ const prevSlide = () => {
 </script>
 
 <template>
+  <section class="banner" :style="{ backgroundImage: `linear-gradient(to right, rgba(3, 37, 65, 0.75) 0%, rgba(3, 37, 65, 0.75) 100%), url(${bannerImage})` }">
+    <div>
+      <h1>Te damos la bienvenida.</h1>
+      <h2>Millones de películas, series y gente por descrubir. Explora ya.</h2>
+    </div>
+  </section>
   <div class="carousel-container">
     <h1>Tendencias</h1>
 
@@ -73,9 +102,38 @@ const prevSlide = () => {
   </div>
 </template>
 
-
-<!-- EZTILOS BASES PARA VER NOMAS -->
 <style scoped>
+/* Estilos del banner */
+.banner {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 300px;
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  color: white;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding: 20px;
+}
+
+.banner h1 {
+  font-size: 2.5rem;
+  text-align: left;
+  font-weight: bold;
+}
+
+.banner h2 {
+  font-size: 1.5rem;
+  text-align: left;
+  font-weight: bold;
+}
+
 .carousel-container {
   width: 200%;
   overflow: hidden;
