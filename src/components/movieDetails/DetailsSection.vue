@@ -1,4 +1,5 @@
 <script setup>
+
     import { ref, onMounted } from "vue";
 
     const title = ref('')
@@ -15,18 +16,8 @@
     const overview = ref('')
     const directors = ref([])
     const screenplayers = ref([])
-    const principal_cast = ref([])
-    
-
-
-
-
-
-
-
 
     onMounted( async () => {
-
         //movie
         try {
             const requestOptions = {
@@ -88,7 +79,6 @@
                 certification.value = details.release_dates[0].certification;
                 
                 let date = new Date(details.release_dates[0].release_date)
-                console.log(details.release_dates[0].release_date);
                 release_year.value = date.getUTCFullYear();
                 release_date.value = date.toISOString().split('T')[0];
                 
@@ -115,7 +105,6 @@
             .then((response) => response.json())
             .then((response) => {
                 let crew = response.crew;
-                let cast = response.cast;
 
                 crew.forEach(e => {
                     if (e.job == 'Director'){
@@ -129,30 +118,22 @@
                     }
                 })
 
-                cast.some(e => {
-                    if (e.order > 9){
-                        return true
-                    }
-                    principal_cast.value.push(e)
-                    
-                })
-                console.log(principal_cast.value);
             })
 
         } catch (error) {
             console.error('hubo un error al obtener los creditos de la pelicula: ' + error);
         }
-    })
+    })    
+
 </script>
 
 <template>
-
-    <div class="movie-details-section">
+    <div class="details-section">
         <img :src="'https://image.tmdb.org/t/p/w500' + backdrop_path" alt="">
         <img :src="'https://image.tmdb.org/t/p/w500' + poster_path" alt="">
         
         <div class="title">
-            <h1>{{ title }}</h1>
+            <a href>{{ title }}</a>
             <h1>{{ release_year }}</h1>
         </div>    
         
@@ -160,7 +141,7 @@
             <h1>{{ certification }}</h1>
             <h1>{{ release_date }}</h1> 
             <h1>({{ country }})</h1>
-            <h1 v-for="genre in genres">{{ genre }}</h1>
+            <a href="" v-for="genre in genres">{{ genre }}</a>
             <h1>{{ runtime }}</h1>
         </div>
         
@@ -177,134 +158,13 @@
         
         <div class="director-screenplay">
             <div class="directors" v-for="director in directors">
-                <h1>{{ director.name }}</h1>
+                <a href="">{{ director.name }}</a>
                 <h2>director</h2>
             </div>
             <div class="screenplayers" v-for="screenplayer in screenplayers">
-                <h1>{{ screenplayer.name }}</h1>
+                <a href="">{{ screenplayer.name }}</a>
                 <h2>Screenplay</h2>
             </div>
         </div> 
-
-    </div>
-
-    <div class="information-section">
-        <div class="information-left-side">
-            
-            <div class="principal-cast">
-                <h1>Reparto principal</h1>
-                <div class="cast">
-                    <div class="cast-card" v-for="person in principal_cast">
-                        <h1>{{ person.name }}</h1>
-                        <h2>{{ person.character }}</h2>
-                    </div>
-                </div>
-                <h2>Reparto y equipo completo</h2>
-                <div class="gray-line"></div>
-            </div>
-            
-            <div class="social">
-                <div class="social-headers">
-                    <h1>Social</h1>
-                    <h2>Reseñas</h2>
-                    <h2>Debates</h2>
-                </div>
-                
-                <div class="reviews-debates">
-                    <div class="review-debate-card">
-
-                    </div>
-                </div>
-                
-                <h1>Ir a debates</h1>
-                <div class="gray-line"></div>
-            </div>
-            
-            <div class="midia">
-                <div class="midia-headers">
-                    <div class="headers">
-                        <h1>Media</h1>
-                        <h2>Mas popular</h2>
-                        <h2>Videos</h2>
-                        <h2>Imagenes de fondo</h2>    
-                        <h2>Carteles</h2>
-                    </div>
-                    <div class="links">
-                        <a href="">Texto link</a>
-                    </div>
-                </div>
-
-                <div class="media-content">
-
-                </div>
-
-                <div class="gray-line"></div>
-            </div>
-
-            <div class="recomendations">
-                <div class="recomendation-card">
-
-                </div>
-            </div>
-        </div>
-         
-        <div class="information-right-side">
-            <div class="social-media-links">
-                <a href=""></a>
-                <a href=""></a>
-                <a href=""></a>
-                <a href=""></a>
-            </div>
-
-            <div class="information-resume">
-                <h1>Titulo original</h1>
-                <h2></h2>
-
-                <h1>Estado</h1>
-                <h2></h2>
-
-                <h1>Idioma original</h1>
-                <h2></h2>
-
-                <h1>Presupuesto</h1>
-                <h2></h2>
-
-                <h1>Ingresos</h1>
-                <h2></h2>
-            </div>
-
-            <div class="keywords">
-                <h1>Palabras clave</h1>
-                <div class="keyword-card">
-                    <h2></h2>
-                </div>
-            </div>
-
-            <div class="gray-line"></div>
-        
-            <div class="content-score">
-                <h1>Puntuacion de contenido</h1>
-
-                <div class="score-table">
-                    <div class="score"></div>
-                    <div class="score-message"></div>
-                </div>
-            </div> 
-            
-            <div class="biggest-contributors">
-                <h1>Mayores aportadores</h1>
-
-                <div class="contributors">
-                    <div class="image-contributor"></div>
-                    <div class="contributor">
-                        <h1>number</h1>
-                        <h2>name</h2>
-                    </div>
-                </div>
-
-                <a href="">Ver historial de ediciones</a>
-            </div>
-        
-        </div>
     </div>
 </template>
