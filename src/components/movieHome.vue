@@ -3,6 +3,9 @@ import { ref, onMounted } from "vue";
 
 const trendingMovies = ref([]);
 const popularMovies = ref([]);
+const popularTvSeries = ref([]);
+const freeMovies = ref([]);
+const freeTv = ref([]);
 const errorMessage = ref(''); 
 const currentSlide = ref(0); 
 const itemsPerView = 7; 
@@ -41,7 +44,16 @@ onMounted(async () => {
   await fetchMovies("https://api.themoviedb.org/3/trending/all/day", trendingMovies);
 
   // Obtener películas populares
-  await fetchMovies("https://api.themoviedb.org/3/movie/popular", popularMovies);
+  await fetchMovies("https://api.themoviedb.org/3/discover/movie?sort_by=popularity.desc", popularMovies);
+
+  // Obtener TV Series populares
+  await fetchMovies("https://api.themoviedb.org/3/discover/tv?sort_by=popularity.desc", popularTvSeries);
+
+  // Obtener películas gratis
+  await fetchMovies("https://api.themoviedb.org/3/discover/movie?with_watch_monetization_types=free&page=2", freeMovies);
+  
+  // Obtener TV gratis
+  await fetchMovies("https://api.themoviedb.org/3/discover/tv?with_watch_monetization_types=free&page=2", freeTv);
 });
 
 // Función para obtener películas
@@ -113,12 +125,60 @@ const prevSlide = () => {
   </div>
   <br>
   <div class="carousel-container">
-    <h1>Lo más popular</h1>
+    <h1>Lo más popular - Movies </h1>
     <button @click="prevSlide" class="prev-button">&lt;</button>
     <button @click="nextSlide" class="next-button">&gt;</button>
     <div class="carousel" v-if="popularMovies.length">
       <div class="carousel-track" :style="{ transform: 'translateX(-${currentSlide * 160}px)' }">
         <div v-for="(movie, index) in popularMovies" :key="index" class="carousel-item">
+          <div v-if="movie.poster_path">
+            <img :src="'https://image.tmdb.org/t/p/w500' + movie.poster_path" :alt="movie.title || movie.name" />
+          </div>
+          <p>{{ movie.title || movie.name }}</p>
+        </div>
+      </div>
+    </div>
+  </div>
+  <br>
+  <div class="carousel-container">
+    <h1>Lo más popular - TV Series </h1>
+    <button @click="prevSlide" class="prev-button">&lt;</button>
+    <button @click="nextSlide" class="next-button">&gt;</button>
+    <div class="carousel" v-if="popularTvSeries.length">
+      <div class="carousel-track" :style="{ transform: 'translateX(-${currentSlide * 160}px)' }">
+        <div v-for="(movie, index) in popularTvSeries" :key="index" class="carousel-item">
+          <div v-if="movie.poster_path">
+            <img :src="'https://image.tmdb.org/t/p/w500' + movie.poster_path" :alt="movie.title || movie.name" />
+          </div>
+          <p>{{ movie.title || movie.name }}</p>
+        </div>
+      </div>
+    </div>
+  </div>
+  <br>
+  <div class="carousel-container">
+    <h1>Ver gratis - Movies</h1>
+    <button @click="prevSlide" class="prev-button">&lt;</button>
+    <button @click="nextSlide" class="next-button">&gt;</button>
+    <div class="carousel" v-if="freeMovies.length">
+      <div class="carousel-track" :style="{ transform: 'translateX(-${currentSlide * 160}px)' }">
+        <div v-for="(movie, index) in freeMovies" :key="index" class="carousel-item">
+          <div v-if="movie.poster_path">
+            <img :src="'https://image.tmdb.org/t/p/w500' + movie.poster_path" :alt="movie.title || movie.name" />
+          </div>
+          <p>{{ movie.title || movie.name }}</p>
+        </div>
+      </div>
+    </div>
+  </div>
+  <br>
+  <div class="carousel-container">
+    <h1>Ver gratis - TV Series</h1>
+    <button @click="prevSlide" class="prev-button">&lt;</button>
+    <button @click="nextSlide" class="next-button">&gt;</button>
+    <div class="carousel" v-if="freeTv.length">
+      <div class="carousel-track" :style="{ transform: 'translateX(-${currentSlide * 160}px)' }">
+        <div v-for="(movie, index) in freeTv" :key="index" class="carousel-item">
           <div v-if="movie.poster_path">
             <img :src="'https://image.tmdb.org/t/p/w500' + movie.poster_path" :alt="movie.title || movie.name" />
           </div>
