@@ -6,6 +6,7 @@
     import MidiaSection from "./components/movieDetails/MidiaSection.vue";
     import InformationResume from "./components/movieDetails/InformationResume.vue";
     import ScoreContributors from "./components/movieDetails/ScoreContributors.vue";
+    import RecomendationSection from "./components/movieDetails/RecomendationSection.vue"
 </script>
 
 <template>
@@ -35,10 +36,8 @@
 
             <div class="gray-line"></div>
 
-            <div class="recomendations">
-                <div class="recomendation-card">
-
-                </div>
+            <div class="recomendations-section">
+                <recomendationSection />
             </div>
         </div>
          
