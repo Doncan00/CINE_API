@@ -2,6 +2,7 @@
 import { ref, onMounted } from "vue";
 
 const trendingMovies = ref([]);
+const popularMovies = ref([]);
 const errorMessage = ref(''); 
 const currentSlide = ref(0); 
 const itemsPerView = 7; 
@@ -35,25 +36,35 @@ const images = [
 
 onMounted(async () => {
   bannerImage.value = images[Math.floor(Math.random() * images.length)];
-  try {
-    const myHeaders = new Headers();
-    myHeaders.append("Authorization", "Bearer eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiJjMWJiNjZjYTgxNzA5NjZkMjFmMjI4ZWJmOWI0ZmI4NCIsIm5iZiI6MTcyNzQ4MzQxOC4yNDg0OTcsInN1YiI6IjY2ZjMxOGYzMDIyMDhjNjdjODhkYWM4MCIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.PPx1NhvNRGrVg-ew1jWZ-bd1ljPhaE-UiKUBJNh3vEc");
 
-    const requestOptions = {
-      method: 'GET',
-      headers: myHeaders,
-      redirect: 'follow'
-    };
+  // Obtener películas en tendencia
+  await fetchMovies("https://api.themoviedb.org/3/trending/all/day", trendingMovies);
 
-    const response = await fetch("https://api.themoviedb.org/3/trending/all/day", requestOptions);
-    const data = await response.json(); 
-
-    trendingMovies.value = data.results;
-  } catch (error) {
-    console.log('error', error);
-    errorMessage.value = 'Hubo un problema al cargar las películas en tendencia.';
-  }
+  // Obtener películas populares
+  await fetchMovies("https://api.themoviedb.org/3/movie/popular", popularMovies);
 });
+
+// Función para obtener películas
+const fetchMovies = async (url, movieList) => {
+  try {
+      const myHeaders = new Headers();
+      myHeaders.append("Authorization", "Bearer eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiJjMWJiNjZjYTgxNzA5NjZkMjFmMjI4ZWJmOWI0ZmI4NCIsIm5iZiI6MTcyNzU2NTMzNC4zNDk0NjEsInN1YiI6IjY2ZjMxOGYzMDIyMDhjNjdjODhkYWM4MCIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.OKuM2RRKAdnmYI07q5zJ8f8JEg5uOuBuVYuGuOrroOg"); 
+
+      const requestOptions = {
+        method: 'GET',
+        headers: myHeaders,
+        redirect: 'follow'
+      };
+
+      const response = await fetch(url, requestOptions);
+      const data = await response.json(); 
+      movieList.value = data.results; 
+    } catch (error) {
+      console.log('error', error);
+      errorMessage.value = 'Hubo un problema al cargar las películas.';
+    }
+};
+
 
 // adelante carrusel
 const nextSlide = () => {
@@ -100,6 +111,22 @@ const prevSlide = () => {
       </div>
     </div>
   </div>
+  <br>
+  <div class="carousel-container">
+    <h1>Lo más popular</h1>
+    <button @click="prevSlide" class="prev-button">&lt;</button>
+    <button @click="nextSlide" class="next-button">&gt;</button>
+    <div class="carousel" v-if="popularMovies.length">
+      <div class="carousel-track" :style="{ transform: 'translateX(-${currentSlide * 160}px)' }">
+        <div v-for="(movie, index) in popularMovies" :key="index" class="carousel-item">
+          <div v-if="movie.poster_path">
+            <img :src="'https://image.tmdb.org/t/p/w500' + movie.poster_path" :alt="movie.title || movie.name" />
+          </div>
+          <p>{{ movie.title || movie.name }}</p>
+        </div>
+      </div>
+    </div>
+  </div>
 </template>
 
 <style scoped>
@@ -137,8 +164,10 @@ const prevSlide = () => {
 .carousel-container {
   width: 200%;
   overflow: hidden;
-  padding: 20px;
+  padding: 0;
   position: relative;
+  margin-top: 300px;
+  margin-bottom: -230px;
 }
 
 .carousel {
