@@ -1,0 +1,35 @@
+.multimedia-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+  gap: 20px;
+}
+
+.multimedia-card {
+  border: 1px solid #000000;
+  border-radius: 8px;
+  padding: 10px;
+  text-align: center;
+  background-color: #242424;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+.multimedia-card img {
+  max-width: 100%;
+  border-radius: 4px;
+}
+
+.multimedia-card h3 {
+  font-size: 1.2em;
+  margin: 10px 0;
+  color: white;
+}
+
+.multimedia-card p {
+  margin: 5px 0;
+  font-size: 0.9em;
+  color: white;
+}
+
+.multimedia-card .calif{
+    color: yellow;
+}
