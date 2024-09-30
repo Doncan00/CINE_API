@@ -17,7 +17,7 @@ export default class SeriesService {
       };
   
         const response = await fetch(
-          `${this.baseUrl}/discover/tv?sort_by=popularity.desc`,
+          `${this.baseUrl}/discover/tv?`,
           requestOptions
         );
         const data = await response.json();

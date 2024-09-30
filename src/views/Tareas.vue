@@ -8,24 +8,31 @@
 
     <div v-else>
       <div v-if="selectSeriesFlag" class="selectedMultimedia">
-        <img :src="`https://image.tmdb.org/t/p/w500${selectedSeries.backdrop_path}`" class="multimedia-image" alt="Series Poster" />
-        <h1>{{ selectedSeries.original_name }}</h1>
-        <p class="vote-average">Calificación: {{ selectedSeries.vote_average.toFixed(1) }}</p>
-        <p class="release-date">Fecha de estreno: {{ selectedSeries.first_air_date }}</p>
-        <p class="overview">{{ selectedSeries.overview }}</p>
-        <p class="vote-count">Conteo de votos: {{ selectedSeries.vote_count }}</p>
+        <img :src="`https://image.tmdb.org/t/p/w500${serieInfo.backdrop_path}`" class="multimedia-image"
+          alt="Series Poster" />
+        <h1>{{ serieInfo.original_name }}</h1>
+        <p>Calificación promedio: {{ serieInfo.vote_average.toFixed(1) }}</p>
+        <p class="release-date">Fecha de estreno: {{ serieInfo.first_air_date }}</p>
+        <p class="overview">{{ serieInfo.overview }}</p>
+        <p class="vote-count">Conteo de votos: {{ serieInfo.vote_count }}</p>
+        <p class="vote-count">SEASONS: {{ serieInfo.seasons }}</p>
 
         <h1>Calificar serie</h1>
         <br>
-        <h1>Tu calificación: 
-          <div v-if="rating == 0"> <h1>No has calificado esta serie</h1> </div>
-          <div v-else> <h3>{{ rating }}</h3></div>
+        <h1>Tu calificación:
+          <div v-if="userRating === null">
+            <h1>No has calificado esta serie</h1>
+          </div>
+          <div v-else>
+            <h3>{{ userRating }}</h3>
+          </div>
         </h1>
         <br>
-        <input v-model.number="rating" type="number" min="1" max="10" />
-        <button @click="submitRating(selectedSeries.id)">Enviar Calificación</button>
+
+        <input v-model.number="userRating" type="number" min="1" max="10" />
+        <button @click="submitRating(serieInfo.id)">Enviar Calificación</button>
         <br>
-        <button @click="deleteRating(selectedSeries.id)">Eliminar Calificación</button>
+        <button @click="deleteRating(serieInfo.id)">Eliminar Calificación</button>
         <br>
         <button @click="selectSeriesFlag = false">Regresar</button>
       </div>
@@ -50,27 +57,30 @@
 import SeriesService from "../services/seriesService";
 import AuthService from "../services/authService";
 import AddRatingService from "../services/addRatingService";
+import SerieInfoService from "../services/serieInfoService";
 
 export default {
   data() {
     return {
       acceso: false,
       selectSeriesFlag: false,
-      rating: 1,
+      userRating: null,
       username: "00Doncan",
-      password: "",
+      password: "00Username",
       apiKey: "206a1b644898f56c99e9b15f454cfdd7",
       seriesList: [],
-      selectedSeries: null,
+      serieInfo: {},
       seriesService: null,
       authService: null,
       addRatingService: null,
+      serieInfoService: null,
     };
   },
   created() {
     this.seriesService = new SeriesService(this.apiKey);
     this.authService = new AuthService(this.apiKey);
     this.addRatingService = new AddRatingService();
+    this.serieInfoService = new SerieInfoService();
   },
   methods: {
     async onSubmit() {
@@ -89,6 +99,7 @@ export default {
     selectSeries(series) {
       this.selectedSeries = series;
       this.selectSeriesFlag = true;
+      this.fetchSerieInfo(series.id);
     },
     async fetchSeries() {
       try {
@@ -97,19 +108,36 @@ export default {
         console.error("Error al obtener series:", error);
       }
     },
-    async submitRating(seriesId) {
+    async fetchSerieInfo(serieId) {
       try {
-        await this.addRatingService.rateSeries(seriesId, this.rating);
+        this.serieInfo = await this.serieInfoService.getSerieInfo(serieId);
+        await this.fetchUserRating(serieId);
+      } catch (error) {
+        console.error("Error al obtener la información de la serie:", error);
+      }
+    },
+    async fetchUserRating(serieId) {
+      try {
+        const response = await this.addRatingService.getUserRating(serieId);
+        this.userRating = response.value || null;
+      } catch (error) {
+        console.error("Error al obtener la calificación del usuario:", error);
+        this.userRating = null;
+      }
+    },
+    async submitRating(serieId) {
+      try {
+        await this.addRatingService.rateSerie(serieId, this.userRating);
         alert("Calificación enviada exitosamente!");
       } catch (error) {
         alert("Error al enviar la calificación.");
       }
     },
-    async deleteRating(seriesId) {
+    async deleteRating(serieId) {
       try {
-        await this.addRatingService.deleteRating(seriesId);
+        await this.addRatingService.deleteRating(serieId);
         alert("Calificación eliminada exitosamente!");
-        this.selectedSeries.vote_average = null;
+        this.userRating = null;
       } catch (error) {
         alert("Error al eliminar la calificación.");
       }
