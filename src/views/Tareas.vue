@@ -8,34 +8,42 @@
 
     <div v-else>
       <div v-if="selectSeriesFlag" class="selectedMultimedia">
-        <img :src="`https://image.tmdb.org/t/p/w500${serieInfo.backdrop_path}`" class="multimedia-image"
-          alt="Series Poster" />
-        <h1>{{ serieInfo.original_name }}</h1>
-        <p>Calificación promedio: {{ serieInfo.vote_average.toFixed(1) }}</p>
-        <p class="release-date">Fecha de estreno: {{ serieInfo.first_air_date }}</p>
-        <p class="overview">{{ serieInfo.overview }}</p>
-        <p class="vote-count">Conteo de votos: {{ serieInfo.vote_count }}</p>
-        <p class="vote-count">SEASONS: {{ serieInfo.seasons }}</p>
+    <img :src="`https://image.tmdb.org/t/p/w500${serieInfo.backdrop_path}`" class="multimedia-image" alt="Series Poster" />
+    <h1>{{ serieInfo.original_name }}</h1>
+    <p>Calificación promedio: {{ serieInfo.vote_average.toFixed(1) }}</p>
+    <p class="release-date">Fecha de estreno: {{ serieInfo.first_air_date }}</p>
+    <p class="overview">{{ serieInfo.overview }}</p>
+    <p class="vote-count">Conteo de votos: {{ serieInfo.vote_count }}</p>
+    <p class="vote-count">Total de episodios: {{ serieInfo.number_of_episodes }}</p>
+    <p class="vote-count">Número de temporadas: {{ serieInfo.number_of_seasons }}</p>
+    <p class="genres">Géneros: 
+        <span v-for="(genre, index) in serieInfo.genres" :key="genre.id">
+            {{ genre.name }}<span v-if="index < serieInfo.genres.length - 1">, </span>
+        </span>
+    </p>
+    <p class="status">Estado: {{ serieInfo.status }}</p>
+    <p class="tagline">Tagline: {{ serieInfo.tagline }}</p>
+    <p class="homepage">Página oficial: <a :href="serieInfo.homepage" target="_blank">{{ serieInfo.homepage }}</a></p>
 
-        <h1>Calificar serie</h1>
-        <br>
-        <h1>Tu calificación:
-          <div v-if="userRating === null">
+    <h1>Calificar serie</h1>
+    <br>
+    <h1>Tu calificación:
+        <div v-if="userRating === null">
             <h1>No has calificado esta serie</h1>
-          </div>
-          <div v-else>
+        </div>
+        <div v-else>
             <h3>{{ userRating }}</h3>
-          </div>
-        </h1>
-        <br>
+        </div>
+    </h1>
+    <br>
 
-        <input v-model.number="userRating" type="number" min="1" max="10" />
-        <button @click="submitRating(serieInfo.id)">Enviar Calificación</button>
-        <br>
-        <button @click="deleteRating(serieInfo.id)">Eliminar Calificación</button>
-        <br>
-        <button @click="selectSeriesFlag = false">Regresar</button>
-      </div>
+    <input v-model.number="userRating" type="number" min="1" max="10" />
+    <button @click="submitRating(serieInfo.id)">Enviar Calificación</button>
+    <br>
+    <button @click="deleteRating(serieInfo.id)">Eliminar Calificación</button>
+    <br>
+    <button @click="selectSeriesFlag = false">Regresar</button>
+</div>
 
       <div v-else>
         <h1>Bienvenido, {{ username }}</h1>
@@ -66,7 +74,7 @@ export default {
       selectSeriesFlag: false,
       userRating: null,
       username: "00Doncan",
-      password: "00Username",
+      password: "",
       apiKey: "206a1b644898f56c99e9b15f454cfdd7",
       seriesList: [],
       serieInfo: {},
