@@ -8,6 +8,10 @@ const freeMovies = ref([]);
 const freeTv = ref([]);
 const errorMessage = ref(''); 
 const currentSlide = ref(0); 
+const currentSlide2 = ref(0);
+const currentSlide3 = ref(0); 
+const currentSlide4 = ref(0); 
+const currentSlide5 = ref(0); 
 const itemsPerView = 7; 
 const bannerImage = ref("");
 
@@ -85,10 +89,66 @@ const nextSlide = () => {
   }
 };
 
-// atras carrusel
+// atras carrusel 
 const prevSlide = () => {
   if (currentSlide.value > 0) {
     currentSlide.value -= itemsPerView;
+  }
+};
+
+// adelante carrusel 2
+const nextSlide2 = () => {
+  if (currentSlide2.value < popularMovies.value.length - itemsPerView) {
+    currentSlide2.value += itemsPerView;
+  }
+};
+
+// atras carrusel 2
+const prevSlide2 = () => {
+  if (currentSlide2.value > 0) {
+    currentSlide2.value -= itemsPerView;
+  }
+};
+
+// adelante carrusel 3
+const nextSlide3 = () => {
+  if (currentSlide3.value < popularTvSeries.value.length - itemsPerView) {
+    currentSlide3.value += itemsPerView;
+  }
+};
+
+// atras carrusel 3
+const prevSlide3 = () => {
+  if (currentSlide3.value > 0) {
+    currentSlide3.value -= itemsPerView;
+  }
+};
+
+// adelante carrusel 4
+const nextSlide4 = () => {
+  if (currentSlide4.value < freeMovies.value.length - itemsPerView) {
+    currentSlide4.value += itemsPerView;
+  }
+};
+
+// atras carrusel 4
+const prevSlide4 = () => {
+  if (currentSlide4.value > 0) {
+    currentSlide4.value -= itemsPerView;
+  }
+};
+
+// adelante carrusel 5
+const nextSlide5 = () => {
+  if (currentSlide5.value < freeTv.value.length - itemsPerView) {
+    currentSlide5.value += itemsPerView;
+  }
+};
+
+// atras carrusel 5
+const prevSlide5 = () => {
+  if (currentSlide5.value > 0) {
+    currentSlide5.value -= itemsPerView;
   }
 };
 </script>
@@ -126,10 +186,10 @@ const prevSlide = () => {
   <br>
   <div class="carousel-container">
     <h1>Lo más popular - Movies </h1>
-    <button @click="prevSlide" class="prev-button">&lt;</button>
-    <button @click="nextSlide" class="next-button">&gt;</button>
+    <button @click="prevSlide2" class="prev-button">&lt;</button>
+    <button @click="nextSlide2" class="next-button">&gt;</button>
     <div class="carousel" v-if="popularMovies.length">
-      <div class="carousel-track" :style="{ transform: 'translateX(-${currentSlide * 160}px)' }">
+      <div class="carousel-track" :style="{ transform: `translateX(-${currentSlide2 * 160}px)` }">
         <div v-for="(movie, index) in popularMovies" :key="index" class="carousel-item">
           <div v-if="movie.poster_path">
             <img :src="'https://image.tmdb.org/t/p/w500' + movie.poster_path" :alt="movie.title || movie.name" />
@@ -142,10 +202,10 @@ const prevSlide = () => {
   <br>
   <div class="carousel-container">
     <h1>Lo más popular - TV Series </h1>
-    <button @click="prevSlide" class="prev-button">&lt;</button>
-    <button @click="nextSlide" class="next-button">&gt;</button>
+    <button @click="prevSlide3" class="prev-button">&lt;</button>
+    <button @click="nextSlide3" class="next-button">&gt;</button>
     <div class="carousel" v-if="popularTvSeries.length">
-      <div class="carousel-track" :style="{ transform: 'translateX(-${currentSlide * 160}px)' }">
+      <div class="carousel-track" :style="{ transform: `translateX(-${currentSlide3 * 160}px)` }">
         <div v-for="(movie, index) in popularTvSeries" :key="index" class="carousel-item">
           <div v-if="movie.poster_path">
             <img :src="'https://image.tmdb.org/t/p/w500' + movie.poster_path" :alt="movie.title || movie.name" />
@@ -158,10 +218,10 @@ const prevSlide = () => {
   <br>
   <div class="carousel-container">
     <h1>Ver gratis - Movies</h1>
-    <button @click="prevSlide" class="prev-button">&lt;</button>
-    <button @click="nextSlide" class="next-button">&gt;</button>
+    <button @click="prevSlide4" class="prev-button">&lt;</button>
+    <button @click="nextSlide4" class="next-button">&gt;</button>
     <div class="carousel" v-if="freeMovies.length">
-      <div class="carousel-track" :style="{ transform: 'translateX(-${currentSlide * 160}px)' }">
+      <div class="carousel-track" :style="{ transform: `translateX(-${currentSlide4 * 160}px)` }">
         <div v-for="(movie, index) in freeMovies" :key="index" class="carousel-item">
           <div v-if="movie.poster_path">
             <img :src="'https://image.tmdb.org/t/p/w500' + movie.poster_path" :alt="movie.title || movie.name" />
@@ -174,10 +234,10 @@ const prevSlide = () => {
   <br>
   <div class="carousel-container">
     <h1>Ver gratis - TV Series</h1>
-    <button @click="prevSlide" class="prev-button">&lt;</button>
-    <button @click="nextSlide" class="next-button">&gt;</button>
+    <button @click="prevSlide5" class="prev-button">&lt;</button>
+    <button @click="nextSlide5" class="next-button">&gt;</button>
     <div class="carousel" v-if="freeTv.length">
-      <div class="carousel-track" :style="{ transform: 'translateX(-${currentSlide * 160}px)' }">
+      <div class="carousel-track" :style="{ transform: `translateX(-${currentSlide5 * 160}px)` }">
         <div v-for="(movie, index) in freeTv" :key="index" class="carousel-item">
           <div v-if="movie.poster_path">
             <img :src="'https://image.tmdb.org/t/p/w500' + movie.poster_path" :alt="movie.title || movie.name" />
