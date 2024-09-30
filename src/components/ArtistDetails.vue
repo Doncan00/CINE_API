@@ -3,6 +3,7 @@ import { ref, onMounted } from 'vue';
 
 const person = ref(null);
 const known_For = ref([]);
+const allProjects = ref([]);
 
 onMounted(async () => {
     const actorId = 1; // ID del artista
@@ -28,7 +29,9 @@ onMounted(async () => {
         .then(response => response.json())
         .then(result => {
             const knowMovies = result.cast;
-            known_For.value = knowMovies.slice(0, 5); 
+            allProjects.value = knowMovies;
+            known_For.value = knowMovies.slice(0, 5);
+            console.log(knowMovies);
         })
         .catch(error => console.log('error', error));
 });
@@ -68,6 +71,16 @@ onMounted(async () => {
                     </div>
                 </div>
             </section>
+
+            <section class="filmography">
+            <h2>Filmografía</h2>
+            <ul v-if="allProjects.length">
+                <li v-for="knowMovies in allProjects" :key="knowMovies.id">
+                    <p>({{ knowMovies.release_date || knowMovies.first_air_date }}) - {{ knowMovies.title || knowMovies.name }} - {{ knowMovies.media_type}} </p>
+                </li>
+            </ul>
+            </section>
+
         </main>
     </div>
 </template>
@@ -133,5 +146,21 @@ onMounted(async () => {
     width: 100px;
     margin-right: 10px;
     margin-left: 100px;
+}
+
+.filmography {
+    margin-top: 40px;
+}
+
+.filmography ul {
+    padding-left: 20px;
+    font-weight: bold;
+}
+
+.filmography li {
+    font-size: 1rem;
+    color: #ffffff;
+    line-height: 1.6;
+    margin-bottom: 8px;
 }
 </style>
