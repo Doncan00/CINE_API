@@ -2,6 +2,6 @@ import './assets/main.css'
 
 import { createApp } from 'vue'
 import App from './App.vue'
-import movieHome from './components/movieHome.vue'
+import ArtistDetails from './components/ArtistDetails.vue'
 
-createApp(movieHome).mount('#app')
+createApp(ArtistDetails).mount('#app')
