@@ -4,4 +4,4 @@ import { createApp } from 'vue'
 import App from './App.vue'
 import movieHome from './components/movieHome.vue'
 
-createApp(movieHome).mount('#app')
+createApp(App).mount('#app')
