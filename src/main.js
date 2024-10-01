@@ -2,8 +2,9 @@
 
 import { createApp } from 'vue'
 import App from './App.vue'
-import movieDetails from './MovieDetails.vue'
+import movieDetails from './movieDetails.vue'
 import KeywordResults from './KeywordResults.vue'
 import movieHome from './components/movieHome.vue'
+import Login from './components/Login.vue'
 
-createApp(movieHome).mount('#app')
+createApp(KeywordResults).mount('#app')
