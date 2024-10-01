@@ -1,50 +1,57 @@
 <template>
   <div>
+    <!-- login -->
     <form @submit.prevent="onSubmit" v-if="!acceso">
       <input v-model="username" placeholder="username" type="text" />
       <input v-model="password" placeholder="password" type="password" />
       <button type="submit">Ingresar</button>
     </form>
-
     <div v-else>
+      <!-- serie info -->
       <div v-if="selectSeriesFlag" class="selectedMultimedia">
-    <img :src="`https://image.tmdb.org/t/p/w500${serieInfo.backdrop_path}`" class="multimedia-image" alt="Series Poster" />
-    <h1>{{ serieInfo.original_name }}</h1>
-    <p>Calificación promedio: {{ serieInfo.vote_average.toFixed(1) }}</p>
-    <p class="release-date">Fecha de estreno: {{ serieInfo.first_air_date }}</p>
-    <p class="overview">{{ serieInfo.overview }}</p>
-    <p class="vote-count">Conteo de votos: {{ serieInfo.vote_count }}</p>
-    <p class="vote-count">Total de episodios: {{ serieInfo.number_of_episodes }}</p>
-    <p class="vote-count">Número de temporadas: {{ serieInfo.number_of_seasons }}</p>
-    <p class="genres">Géneros: 
-        <span v-for="(genre, index) in serieInfo.genres" :key="genre.id">
-            {{ genre.name }}<span v-if="index < serieInfo.genres.length - 1">, </span>
-        </span>
-    </p>
-    <p class="status">Estado: {{ serieInfo.status }}</p>
-    <p class="tagline">Tagline: {{ serieInfo.tagline }}</p>
-    <p class="homepage">Página oficial: <a :href="serieInfo.homepage" target="_blank">{{ serieInfo.homepage }}</a></p>
+        <img :src="`https://image.tmdb.org/t/p/w500${serieInfo.backdrop_path}`" class="multimedia-image"
+          alt="Series Poster" />
 
-    <h1>Calificar serie</h1>
-    <br>
-    <h1>Tu calificación:
+        <h1>{{ serieInfo.original_name }}</h1>
+        <p>Calificación promedio: {{ serieInfo.vote_average.toFixed(1) }}</p>
+        <p class="release-date">Fecha de estreno: {{ serieInfo.first_air_date }}</p>
+        <p class="overview">{{ serieInfo.overview }}</p>
+        <p class="vote-count">Conteo de votos: {{ serieInfo.vote_count }}</p>
+        <p class="vote-count">SEASONS: {{ serieInfo.seasons.length }}</p>
+
+        <!-- Agregar a favoritos -->
+        <div>
+          <button v-if="!isFavorite" @click="addFavoriteSerie(serieInfo.id)">Añadir a favoritos</button>
+          <button v-else @click="removeFavoriteSerie(serieInfo.id)">Eliminar de favoritos</button>
+        </div>
+
+        <h1>Calificar serie</h1>
         <div v-if="userRating === null">
-            <h1>No has calificado esta serie</h1>
+          <h1>No has calificado esta serie</h1>
         </div>
         <div v-else>
-            <h3>{{ userRating }}</h3>
+          <h3>{{ userRating }}</h3>
         </div>
-    </h1>
-    <br>
+        <input v-model.number="userRating" type="number" min="1" max="10" />
+        <button @click="submitRating(serieInfo.id)">Enviar Calificación</button>
+        <br />
+        <button @click="deleteRating(serieInfo.id)">Eliminar Calificación</button>
+        <br />
+        <button @click="selectSeriesFlag = false">Regresar</button>
 
-    <input v-model.number="userRating" type="number" min="1" max="10" />
-    <button @click="submitRating(serieInfo.id)">Enviar Calificación</button>
-    <br>
-    <button @click="deleteRating(serieInfo.id)">Eliminar Calificación</button>
-    <br>
-    <button @click="selectSeriesFlag = false">Regresar</button>
-</div>
+        <!-- creditos -->
+        <h2>Reparto principal</h2>
+        <div class="multimedia-grid">
+          <div class="multimedia-card" v-for="actor in credits" :key="actor.id">
+            <img v-if="actor.profile_path" :src="`https://image.tmdb.org/t/p/w500${actor.profile_path}`" alt="Foto de actor" />
+            <h3>{{ actor.name }}</h3>
+            <p>Personaje: {{ actor.character }}</p>
+          </div>
+        </div>
 
+      </div>
+
+      <!-- Home -->
       <div v-else>
         <h1>Bienvenido, {{ username }}</h1>
         <h2>Series populares:</h2>
@@ -61,11 +68,14 @@
   </div>
 </template>
 
+
 <script>
 import SeriesService from "../services/seriesService";
 import AuthService from "../services/authService";
 import AddRatingService from "../services/addRatingService";
 import SerieInfoService from "../services/serieInfoService";
+import AddFavoriteService from "../services/addFavoriteService";
+import CreditsService from "../services/creditsService";
 
 export default {
   data() {
@@ -73,15 +83,19 @@ export default {
       acceso: false,
       selectSeriesFlag: false,
       userRating: null,
+      isFavorite: false,
       username: "00Doncan",
       password: "",
       apiKey: "206a1b644898f56c99e9b15f454cfdd7",
       seriesList: [],
       serieInfo: {},
+      credits: [],
       seriesService: null,
       authService: null,
       addRatingService: null,
+      addFavoriteService: null,
       serieInfoService: null,
+      creditsService: null,
     };
   },
   created() {
@@ -89,6 +103,8 @@ export default {
     this.authService = new AuthService(this.apiKey);
     this.addRatingService = new AddRatingService();
     this.serieInfoService = new SerieInfoService();
+    this.addFavoriteService = new AddFavoriteService();
+    this.creditsService = new CreditsService(this.apiKey);
   },
   methods: {
     async onSubmit() {
@@ -120,6 +136,8 @@ export default {
       try {
         this.serieInfo = await this.serieInfoService.getSerieInfo(serieId);
         await this.fetchUserRating(serieId);
+        await this.checkIfFavorite(serieId);
+        await this.fetchCredits(serieId);
       } catch (error) {
         console.error("Error al obtener la información de la serie:", error);
       }
@@ -150,6 +168,41 @@ export default {
         alert("Error al eliminar la calificación.");
       }
     },
+    async addFavoriteSerie(serieId) {
+      try {
+        await this.addFavoriteService.addFavoriteSerie(serieId);
+        this.isFavorite = true;
+        alert("Serie añadida a favoritos!");
+      } catch (error) {
+        alert("Error al añadir la serie a favoritos.");
+      }
+    },
+    async removeFavoriteSerie(serieId) {
+      try {
+        await this.addFavoriteService.removeFavoriteSerie(serieId);
+        this.isFavorite = false;
+        alert("Serie eliminada de favoritos!");
+      } catch (error) {
+        alert("Error al eliminar la serie de favoritos.");
+      }
+    },
+    async checkIfFavorite(serieId) {
+      try {
+        const isFavorite = await this.addFavoriteService.checkIfFavorite(serieId);
+        this.isFavorite = isFavorite;
+      } catch (error) {
+        console.error("Error al verificar si la serie es favorita:", error);
+      }
+    },
+    async fetchCredits(serieId) {
+      try {
+        const response = await this.creditsService.getCredits(serieId);
+        this.credits = response.cast;
+      } catch (error) {
+        console.error("Error al obtener los créditos:", error);
+      }
+    },
   },
 };
 </script>
+

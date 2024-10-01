@@ -35,3 +35,9 @@
   margin-top: 20px; /* Espaciado antes de la descripción */
   line-height: 1.6; /* Mejora la legibilidad del texto */
 }
+
+.network-logo {
+  width: 100px; /* Ajusta el tamaño según sea necesario */
+  height: auto;
+  margin-right: 10px;
+}

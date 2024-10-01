@@ -1,7 +1,7 @@
 import './assets/main.css'
 import './css/table.css';
 import './css/card.css'
-import './css/moviePage.css'
+import './css/seriesPage.css'
 
 import { createApp } from 'vue'
 import { createPinia } from 'pinia'
