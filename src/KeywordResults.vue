@@ -91,3 +91,62 @@
     </div>    
 
 </template>
+
+<style scoped>
+/* Estilos generales */
+body {
+  font-family: 'Arial', sans-serif;
+  background-color: #f5f5f5;
+  color: #333;
+}
+
+h1 {
+  font-size: 24px;
+  font-family: 'Arial', sans-serif; 
+  font-weight: bold;
+  margin: 0;
+  padding: 0;
+}
+
+/* Estilo para la sección del encabezado */
+.header-section {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background-color: #0c2a45;
+  color: white;
+  padding: 20px;
+}
+
+.header-section h1 {
+  margin: 0;
+  font-size: 28px;
+}
+
+/* Estilos para la sección del contenido */
+.content-section {
+  padding: 20px;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+/* Estilo para el botón de "Show More" */
+button {
+  background-color: #007bff;
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 16px;
+  transition: background-color 0.3s ease;
+  display: block;
+  margin: 0 auto;
+}
+
+button:hover {
+  background-color: #0056b3;
+}
+
+
+</style>
