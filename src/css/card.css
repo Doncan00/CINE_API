@@ -33,3 +33,12 @@
 .multimedia-card .calif{
     color: yellow;
 }
+
+.keyword-card {
+  border: 1px solid #000000;
+  border-radius: 8px;
+  padding: 10px;
+  text-align: center;
+  background-color: #242424;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}

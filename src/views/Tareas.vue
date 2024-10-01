@@ -37,18 +37,28 @@
         <br />
         <button @click="deleteRating(serieInfo.id)">Eliminar Calificación</button>
         <br />
-        <button @click="selectSeriesFlag = false">Regresar</button>
-
-        <!-- creditos -->
+        
+        <!-- Creditos -->
         <h2>Reparto principal</h2>
         <div class="multimedia-grid">
           <div class="multimedia-card" v-for="actor in credits" :key="actor.id">
-            <img v-if="actor.profile_path" :src="`https://image.tmdb.org/t/p/w500${actor.profile_path}`" alt="Foto de actor" />
+            <img v-if="actor.profile_path" :src="`https://image.tmdb.org/t/p/w500${actor.profile_path}`"
+            alt="Foto de actor" />
             <h3>{{ actor.name }}</h3>
             <p>Personaje: {{ actor.character }}</p>
           </div>
         </div>
-
+        
+        <!-- Palabras clave -->
+        <h2>Palabras clave</h2>
+        <div class="multimedia-grid">
+          <div class="keyword-card" v-for="keyword in keywords" :key="keyword.id">
+            <h3>{{ keyword.name }}</h3>
+          </div>
+        </div>
+        <br>
+        <button @click="selectSeriesFlag = false">Regresar</button>
+        
       </div>
 
       <!-- Home -->
@@ -76,6 +86,7 @@ import AddRatingService from "../services/addRatingService";
 import SerieInfoService from "../services/serieInfoService";
 import AddFavoriteService from "../services/addFavoriteService";
 import CreditsService from "../services/creditsService";
+import KeyWordsService from "../services/keyWordsService";
 
 export default {
   data() {
@@ -90,12 +101,14 @@ export default {
       seriesList: [],
       serieInfo: {},
       credits: [],
+      keywords: [],
       seriesService: null,
       authService: null,
       addRatingService: null,
       addFavoriteService: null,
       serieInfoService: null,
       creditsService: null,
+      keyWordsService: null,
     };
   },
   created() {
@@ -105,6 +118,7 @@ export default {
     this.serieInfoService = new SerieInfoService();
     this.addFavoriteService = new AddFavoriteService();
     this.creditsService = new CreditsService(this.apiKey);
+    this.keyWordsService = new KeyWordsService();
   },
   methods: {
     async onSubmit() {
@@ -138,6 +152,7 @@ export default {
         await this.fetchUserRating(serieId);
         await this.checkIfFavorite(serieId);
         await this.fetchCredits(serieId);
+        await this.fetchKeywords(serieId);
       } catch (error) {
         console.error("Error al obtener la información de la serie:", error);
       }
@@ -202,7 +217,24 @@ export default {
         console.error("Error al obtener los créditos:", error);
       }
     },
+    async fetchKeywords(serieId) {
+      try {
+        const response = await this.keyWordsService.getKeywords(serieId);
+        console.log("Respuesta de la API:", response);
+
+        if (response && response.results && Array.isArray(response.results)) {
+          this.keywords = response.results;
+          console.log("Palabras clave obtenidas:", this.keywords);
+        } else {
+          console.warn("No se encontraron palabras clave.");
+          this.keywords = [];
+        }
+      } catch (error) {
+        console.error("Error al obtener las palabras clave:", error);
+        this.keywords = [];
+      }
+    },
+
   },
 };
 </script>
-
