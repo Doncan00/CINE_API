@@ -86,13 +86,19 @@
         <div class="midia-headers">
             <div class="headers">
                 <h1>Media</h1>
-                <button @click="midia_showing = 0">Mas popular</button>
-                <button @click="midia_showing = 1">Videos</button>
-                <button @click="midia_showing = 2">Imagenes de fondo</button>    
-                <button @click="midia_showing = 3">Carteles</button>
+                <button @click="midia_showing = 0" :class="{ active: midia_showing === 0 }">Mas popular</button>
+                <button @click="midia_showing = 1" :class="{ active: midia_showing === 1 }">Videos</button>
+                <button @click="midia_showing = 2" :class="{ active: midia_showing === 2 }">Imagenes de fondo</button>
+                <button @click="midia_showing = 3" :class="{ active: midia_showing === 3 }">Carteles</button>
             </div>
-            <div class="links">
-                <a href="">Texto link</a>
+            <div class="links" v-if="midia_showing == 1">
+                <a href="">See all videos</a>
+            </div>
+            <div class="links" v-if="midia_showing == 2">
+                <a href="">See all background images</a>
+            </div>
+            <div class="links" v-if="midia_showing == 3">
+                <a href="">See all posters</a>
             </div>
         </div>
 
@@ -127,3 +133,152 @@
 
     </div>
 </template>
+
+<style>
+    .midia {
+        background-color: white;
+        padding: 20px;
+        max-width: 1200px;
+        margin: 0;
+    }
+
+    .midia-headers {
+        display: flex;
+        justify-content: space-between; 
+        align-items: center;
+        padding-bottom: 10px;
+        margin-bottom: 5px;
+    }
+
+    .midia-headers h1 {
+        display: inline;
+        font-size: 1.5em;
+        color: #333;
+    }
+
+    .headers button {
+        background-color: white;
+        border: none;
+        font-size: 1.2em;
+        color: #333;
+        margin: 0 10px;
+        padding: 10px 15px;
+        cursor: pointer;
+        transition: border-bottom 0.3s ease;
+    }
+
+    .headers button:hover {
+        border-bottom: 2px solid black;
+    }
+
+    .headers button.active {
+        font-weight: bold;
+        border-bottom: 2px solid black;
+    }
+
+    .links a {
+        color: #007bff;
+        text-decoration: none;
+        font-size: 1em;
+        margin-top: 0px;
+    }
+
+    .media-content {
+        display: flex;
+        justify-content: space-between;
+        flex-wrap: wrap;
+    }
+
+    .more-popular {
+        display: flex;
+        align-items: center;
+        width: 100%;
+        overflow-x: auto;
+        scroll-snap-type: x mandatory;
+    }
+
+    .more-popular div {
+        display: flex;
+        justify-content: center;
+        
+    }
+    
+    .more-popular img {
+        height: 300px;
+    }
+
+    .videos, .bg-imgs, .posters {
+        display: flex;
+        overflow-x: auto;
+        scroll-snap-type: x mandatory;
+
+    }
+
+    .videos div, .bg-imgs div, .posters div {
+        flex: 1;
+        text-align: center;
+
+    }
+
+    .videos img, .bg-imgs img, .posters img {
+        height: 300px;
+        box-shadow: 0px 2px 8px rgba(0, 0, 0, 0.1);
+        overflow: hidden;
+        transition: transform 0.2s ease;
+        scroll-snap-align: center;
+
+    }
+
+    .posters::-webkit-scrollbar {
+        height: 8px;
+    }
+
+    .posters::-webkit-scrollbar-thumb {
+        background-color: #ccc;
+        border-radius: 4px;
+    }
+
+    .posters::-webkit-scrollbar-thumb:hover {
+        background-color: #999;
+    }
+
+    .bg-imgs::-webkit-scrollbar {
+        height: 8px;
+    }
+
+    .bg-imgs::-webkit-scrollbar-thumb {
+        background-color: #ccc;
+        border-radius: 4px;
+    }
+
+    .bg-imgs::-webkit-scrollbar-thumb:hover {
+        background-color: #999;
+    }
+
+    .videos::-webkit-scrollbar {
+        height: 8px;
+    }
+
+    .videos::-webkit-scrollbar-thumb {
+        background-color: #ccc;
+        border-radius: 4px;
+    }
+
+    .videos::-webkit-scrollbar-thumb:hover {
+        background-color: #999;
+    }
+
+    .more-popular::-webkit-scrollbar {
+        height: 8px;
+    }
+
+    .more-popular::-webkit-scrollbar-thumb {
+        background-color: #ccc;
+        border-radius: 4px;
+    }
+
+    .more-popular::-webkit-scrollbar-thumb:hover {
+        background-color: #999;
+    }
+
+</style>

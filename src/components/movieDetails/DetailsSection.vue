@@ -128,43 +128,166 @@
 </script>
 
 <template>
-    <div class="details-section">
-        <img :src="'https://image.tmdb.org/t/p/w500' + backdrop_path" alt="">
-        <img :src="'https://image.tmdb.org/t/p/w500' + poster_path" alt="">
-        
-        <div class="title">
-            <a href>{{ title }}</a>
-            <h1>{{ release_year }}</h1>
-        </div>    
-        
-        <div class="general-information">
-            <h1>{{ certification }}</h1>
-            <h1>{{ release_date }}</h1> 
-            <h1>({{ country }})</h1>
-            <a href="" v-for="genre in genres">{{ genre }}</a>
-            <h1>{{ runtime }}</h1>
+    <div class="details-section" :style="{ backgroundImage: 'url(https://image.tmdb.org/t/p/w500' + backdrop_path + ')' }">
+        <div class="details-section-top">
+            <img :src="'https://image.tmdb.org/t/p/w500' + poster_path" alt="">
+
         </div>
         
-        <div class="vote-average">
-            <h1>{{ vote_average }}</h1>
-            <h2>Puntuacion de usuarios</h2>
-        </div>
-        
-        <div class="tagline-overview">
-            <h1>{{ tagline }}</h1>
-            <h1>Vista general</h1>
-            <h1>{{ overview }}</h1>
-        </div>
-        
-        <div class="director-screenplay">
-            <div class="directors" v-for="director in directors">
-                <a href="">{{ director.name }}</a>
-                <h2>director</h2>
+        <div class="details-section-bottom">
+
+            <div class="title">
+                <a href>{{ title }}</a>
+                <h1>{{ release_year }}</h1>
+            </div>    
+            
+            <div class="general-information">
+                <h1>{{ certification }}</h1>
+                <h1>{{ release_date }}</h1> 
+                <h1>({{ country }})</h1>
+                <a href="" v-for="genre in genres">{{ genre }}</a>
+                <h1>{{ runtime }}</h1>
             </div>
-            <div class="screenplayers" v-for="screenplayer in screenplayers">
-                <a href="">{{ screenplayer.name }}</a>
-                <h2>Screenplay</h2>
+            
+            <div class="vote-average">
+                <h1>{{ vote_average }}</h1>
+                <h2>Puntuacion de usuarios</h2>
             </div>
-        </div> 
+            
+            <div class="tagline-overview">
+                <h1>{{ tagline }}</h1>
+                <h1>Overview</h1>
+                <h1>{{ overview }}</h1>
+            </div>
+            
+            <div class="director-screenplay">
+                <div class="directors" v-for="director in directors">
+                    <a href="">{{ director.name }}</a>
+                    <h2>director</h2>
+                </div>
+                <div class="screenplayers" v-for="screenplayer in screenplayers">
+                    <a href="">{{ screenplayer.name }}</a>
+                    <h2>Screenplay</h2>
+                </div>
+            </div> 
+        </div>
     </div>
 </template>
+
+<style>
+    .details-section {
+        background-image: url();
+        display: flex;
+        flex-direction: row;
+        background-color: #1a1a1a;
+        color: white;
+        font-family: Arial, sans-serif;
+        padding: 20px;
+        width: 97.35%;
+        margin: 0;
+        background-size: cover;
+        background-position: center;
+        background-repeat: no-repeat;
+        align-items: center;
+        justify-content: center;
+    }
+
+    .details-section img {
+        max-width: 30%;
+        height: auto;
+        border-radius: 8px;
+        margin-bottom: 20px;
+    }
+
+    .title {
+        display: flex;
+        justify-content: flex-start;
+        align-items: center;
+    }
+
+    .title a {
+        font-size: 2em;
+        color: #fff;
+        text-decoration: none;
+    }
+
+    .title h1 {
+        font-size: 1.5em;
+        color: #888;
+    }
+
+    .general-information {
+        display: flex;
+        gap: 15px;
+        font-size: 1.2em;
+        margin: 10px 0;
+    }
+
+    .general-information h1, .general-information a {
+        color: #ccc;
+    }
+
+    .general-information a {
+        text-decoration: none;
+        color: #50b8f2;
+    }
+
+    .vote-average {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+    }
+
+    .vote-average h1 {
+        font-size: 2em;
+        color: #82d742;
+        margin-right: 10px;
+    }
+
+    .vote-average h2 {
+        font-size: 1em;
+        color: #ccc;
+    }
+
+    .tagline-overview {
+        margin-top: 20px;
+    }
+
+    .tagline-overview h1:first-child {
+        font-style: italic;
+        font-size: 1.5em;
+        color: #ccc;
+        margin-bottom: 10px;
+    }
+
+    .tagline-overview h1 {
+        margin: 10px 0;
+        font-size: 1.2em;
+        color: #ddd;
+    }
+
+    .director-screenplay {
+        display: flex;
+        gap: 50px;
+        margin-top: 30px;
+    }
+
+    .director-screenplay div {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .director-screenplay a {
+        color: #50b8f2;
+        font-size: 1.2em;
+        text-decoration: none;
+    }
+
+    .director-screenplay h2 {
+        font-size: 1em;
+        color: #888;
+        margin-top: 5px;
+    }
+
+</style>

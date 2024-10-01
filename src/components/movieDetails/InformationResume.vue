@@ -4,7 +4,7 @@
 
     const original_title = ref('')
     const status = ref('')
-    const original_lenguage = ref ('')
+    const original_language = ref ('')
     const budget = ref(0)
     const revenue = ref(0)
     const keywords = ref([])
@@ -24,7 +24,7 @@
         .then((response) => {
             original_title.value = response.original_title;
             status.value = response.status;
-            original_lenguage.value = response.original_lenguage;
+            original_language.value = response.original_language;
             budget.value = response.budget;
             revenue.value = response.revenue
             homepage.value = response.homepage;
@@ -77,14 +77,14 @@
 
 <template>
 
-    <div class="information-resume">
+    <div class="information">
         
         <div class="social-media-links">
-            <a :href="'https://www.facebook.com/' + facebook_id">facebook</a>
-            <a :href="'https://x.com/' + twitter_id">twitter</a>
-            <a :href="'https://www.instagram.com/' + instagram_id">instagram</a>
-            <div class="vertica-gray-line"></div>
-            <a :href="homepage">homepage</a>
+            <a :href="'https://www.facebook.com/' + facebook_id">f</a>
+            <a :href="'https://x.com/' + twitter_id">t</a>
+            <a :href="'https://www.instagram.com/' + instagram_id">i</a>
+            <div class="vertical-gray-line"></div>
+            <a :href="homepage">h</a>
         </div>
     
         <div class="information-resume">
@@ -95,7 +95,7 @@
             <h2>{{ status }}</h2>
     
             <h1>Idioma original</h1>
-            <h2>{{ original_lenguage }}</h2>
+            <h2>{{ original_language }}</h2>
     
             <h1>Presupuesto</h1>
             <h2>{{ budget }}</h2>
@@ -115,3 +115,85 @@
 
 
 </template>
+
+<style>
+    .information {
+        display: flex;
+        flex-direction: column;
+        gap: 10px;
+        padding: 20px;
+        padding-top: 40px;
+    }
+    
+    .information-resume {
+        display: flex;
+        flex-direction: column;
+
+    }
+
+    .social-media-links {
+        display: flex;
+        align-items: center;
+        gap: 15px;
+        margin-bottom: 15px;
+    }
+
+    .social-media-links a {
+        font-size: 18px;
+        color: #333;
+        text-decoration: none;
+        transition: color 0.2s ease;
+        margin: 0;
+    }
+
+    .social-media-links a:hover {
+        color: #555;
+        height: 100%;
+    }
+
+    .vertical-gray-line {
+        height: 25px;
+        width: 2px;
+        background-color: #ccc;
+    }
+
+    .information-resume h1 {
+        font-size: 18px;
+        font-weight: bold;
+        margin: 0;
+        margin-bottom: 5px;
+        color: #333;
+    }
+
+    .information-resume h2 {
+        font-size: 16px;
+        margin: 0;
+        margin-bottom: 15px;
+        color: #666;
+    }
+
+    .keywords {
+        margin-top: 20px;
+    }
+
+    .keywords h1 {
+        font-size: 18px;
+        margin-bottom: 10px;
+    }
+
+    .keyword-card {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 10px;
+    }
+
+    .keyword-card h2 {
+        background-color: #f0f0f0;
+        color: #333;
+        padding: 5px 10px;
+        border-radius: 15px;
+        font-size: 14px;
+        margin: 0;
+    }
+
+</style>
