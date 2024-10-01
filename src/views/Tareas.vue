@@ -37,18 +37,18 @@
         <br />
         <button @click="deleteRating(serieInfo.id)">Eliminar Calificación</button>
         <br />
-        
+
         <!-- Creditos -->
         <h2>Reparto principal</h2>
         <div class="multimedia-grid">
           <div class="multimedia-card" v-for="actor in credits" :key="actor.id">
             <img v-if="actor.profile_path" :src="`https://image.tmdb.org/t/p/w500${actor.profile_path}`"
-            alt="Foto de actor" />
+              alt="Foto de actor" />
             <h3>{{ actor.name }}</h3>
             <p>Personaje: {{ actor.character }}</p>
           </div>
         </div>
-        
+
         <!-- Palabras clave -->
         <h2>Palabras clave</h2>
         <div class="multimedia-grid">
@@ -56,9 +56,20 @@
             <h3>{{ keyword.name }}</h3>
           </div>
         </div>
+
+        <!-- Trailer -->
+        <div v-if="videos.length">
+          <h2>Teasers</h2>
+          <div v-for="video in videos" :key="video.id">
+            <h3>{{ video.name }}</h3>
+            <iframe width="560" height="315" :src="`https://www.youtube.com/embed/${video.key}`" frameborder="0"
+              allowfullscreen></iframe>
+          </div>
+        </div>
+
         <br>
         <button @click="selectSeriesFlag = false">Regresar</button>
-        
+
       </div>
 
       <!-- Home -->
@@ -87,6 +98,7 @@ import SerieInfoService from "../services/serieInfoService";
 import AddFavoriteService from "../services/addFavoriteService";
 import CreditsService from "../services/creditsService";
 import KeyWordsService from "../services/keyWordsService";
+import VideoTeaserService from "../services/videoTeaserService";
 
 export default {
   data() {
@@ -102,6 +114,7 @@ export default {
       serieInfo: {},
       credits: [],
       keywords: [],
+      videos: [],
       seriesService: null,
       authService: null,
       addRatingService: null,
@@ -109,6 +122,7 @@ export default {
       serieInfoService: null,
       creditsService: null,
       keyWordsService: null,
+      videoTeaserService: null,
     };
   },
   created() {
@@ -119,6 +133,7 @@ export default {
     this.addFavoriteService = new AddFavoriteService();
     this.creditsService = new CreditsService(this.apiKey);
     this.keyWordsService = new KeyWordsService();
+    this.videoTeaserService = new VideoTeaserService();
   },
   methods: {
     async onSubmit() {
@@ -153,6 +168,7 @@ export default {
         await this.checkIfFavorite(serieId);
         await this.fetchCredits(serieId);
         await this.fetchKeywords(serieId);
+        await this.fetchVideos(serieId);
       } catch (error) {
         console.error("Error al obtener la información de la serie:", error);
       }
@@ -232,6 +248,14 @@ export default {
       } catch (error) {
         console.error("Error al obtener las palabras clave:", error);
         this.keywords = [];
+      }
+    },
+    async fetchVideos(serieId) {
+      try {
+        const response = await this.videoTeaserService.getVideos(serieId);
+        this.videos = response.results;
+      } catch (error) {
+        console.error("Error al obtener los videos:", error);
       }
     },
 
