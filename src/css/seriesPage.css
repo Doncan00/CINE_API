@@ -41,3 +41,50 @@
   height: auto;
   margin-right: 10px;
 }
+
+
+body {
+  font-family: Arial, sans-serif;
+  margin: 0;
+  padding: 0;
+  background-color: #121212;
+  color: #ffffff;
+}
+
+.background {
+  background-image: url('path/to/your/background/image.jpg'); /* Asegúrate de cambiar esto */
+  background-size: cover;
+  background-position: center;
+  padding: 20px;
+}
+
+h1, h2, h3 {
+  color: #ffffff;
+}
+
+p {
+  color: #cccccc;
+}
+
+button {
+  background-color: #4b4b4b;
+  color: #ffffff;
+  border: none;
+  border-radius: 5px;
+  padding: 10px 20px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+button:hover {
+  background-color: #3a3a3a;
+}
+
+.multimedia-card:hover {
+  transform: scale(1.05);
+}
+
+.release-date {
+  font-style: italic;
+  margin: 10px 0;
+}

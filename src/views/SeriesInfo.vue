@@ -53,19 +53,50 @@
         <h2>Palabras clave</h2>
         <div class="multimedia-grid">
           <div class="keyword-card" v-for="keyword in keywords" :key="keyword.id">
-            <h3>{{ keyword.name }}</h3>
+            {{ keyword.name }}
+            <!-- <h3>{{ keyword.id }}</h3> -->
+          </div>
+        </div>
+        <br>
+        Trailer
+        <div v-if="videos.length">
+  <h2>Official Trailers</h2>
+  <div v-for="video in videos.filter(video => video.type === 'Trailer' && video.name.includes('Official Trailer'))" :key="video.id">
+    <h3>{{ video.name }}</h3>
+    <iframe width="560" height="315" :src="`https://www.youtube.com/embed/${video.key}`" frameborder="0" allowfullscreen></iframe>
+  </div>
+</div>
+
+
+
+
+        <!-- recomendaciones -->
+        <div v-if="recommendations.length">
+          <h2>Recomendaciones</h2>
+          <div class="multimedia-grid">
+            <div class="multimedia-card" v-for="recommendation in recommendations" :key="recommendation.id">
+              <img :src="`https://image.tmdb.org/t/p/w500${recommendation.poster_path}`" alt="Poster" />
+              <h3>{{ recommendation.original_name }}</h3>
+              <p>{{ recommendation.first_air_date }}</p>
+              <p class="calif">Calificación: {{ recommendation.vote_average.toFixed(1) }}</p>
+            </div>
           </div>
         </div>
 
-        <!-- Trailer -->
-        <div v-if="videos.length">
-          <h2>Teasers</h2>
-          <div v-for="video in videos" :key="video.id">
-            <h3>{{ video.name }}</h3>
-            <iframe width="560" height="315" :src="`https://www.youtube.com/embed/${video.key}`" frameborder="0"
-              allowfullscreen></iframe>
-          </div>
+        <!-- Temporadas -->
+        <div>
+          <h2>Temporadas:</h2>
+          <ul>
+    <div class="multimedia-grid">
+      <div class="keyword-card" v-for="season in serieInfo.seasons" :key="season.id"
+           @click="goToSeasonInfo(season.id)">
+        {{ season.name }}
+      </div>
+    </div>
+  </ul>
         </div>
+
+
 
         <br>
         <button @click="selectSeriesFlag = false">Regresar</button>
@@ -99,6 +130,8 @@ import AddFavoriteService from "../services/addFavoriteService";
 import CreditsService from "../services/creditsService";
 import KeyWordsService from "../services/keyWordsService";
 import VideoTeaserService from "../services/videoTeaserService";
+import RecommendationsService from "../services/recommendationsService";
+import SeasonsService from "../services/seasonsService";
 
 export default {
   data() {
@@ -115,6 +148,8 @@ export default {
       credits: [],
       keywords: [],
       videos: [],
+      recommendations: [],
+      seasonsList: [],
       seriesService: null,
       authService: null,
       addRatingService: null,
@@ -123,6 +158,9 @@ export default {
       creditsService: null,
       keyWordsService: null,
       videoTeaserService: null,
+      recommendationsService: null,
+      selectedSeason: null,
+      seasonsService: null,
     };
   },
   created() {
@@ -134,6 +172,7 @@ export default {
     this.creditsService = new CreditsService(this.apiKey);
     this.keyWordsService = new KeyWordsService();
     this.videoTeaserService = new VideoTeaserService();
+    this.recommendationsService = new RecommendationsService();
   },
   methods: {
     async onSubmit() {
@@ -169,6 +208,7 @@ export default {
         await this.fetchCredits(serieId);
         await this.fetchKeywords(serieId);
         await this.fetchVideos(serieId);
+        await this.fetchRecommendations(serieId);
       } catch (error) {
         console.error("Error al obtener la información de la serie:", error);
       }
@@ -258,6 +298,17 @@ export default {
         console.error("Error al obtener los videos:", error);
       }
     },
+    async fetchRecommendations(serieId) {
+      try {
+        const response = await this.recommendationsService.getRecommendations(serieId);
+        this.recommendations = response;
+      } catch (error) {
+        console.error("Error al obtener las recomendaciones:", error);
+      }
+    },
+    goToSeasonInfo(tempId) {
+  this.$router.replace({ name: 'TempDetails', params: { serieId: this.serieInfo.id, tempId } });
+},
 
   },
 };

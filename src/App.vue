@@ -1,11 +1,10 @@
 <script setup lang="ts">
 import { RouterLink, RouterView } from 'vue-router'
-import Tareas from "./views/Tareas.vue"
+import SeriesInfo from "./views/SeriesInfo.vue"
 
 </script>
 
 <template>
-
-  <Tareas />
+  <RouterView/>
 </template>
 
