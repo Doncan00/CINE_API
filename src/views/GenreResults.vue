@@ -1,7 +1,7 @@
 <script setup>
 import { ref, onMounted, computed, watch } from "vue";
 import { useRoute } from "vue-router";
-import MovieCard from "./components/KeywordResults/MovieCard.vue";
+import MovieCard from "../components/KeywordResults/MovieCard.vue";
 
 const movies = ref([]);
 const total_results = ref(0);
@@ -26,7 +26,7 @@ genre_id.value = route.params.id;
 const fetchKeywordMovies = async () => {
   let page = 1;
   let totalPages = 1;
-  movies.value = []; // Limpiar películas al cambiar categoría
+  movies.value = []; 
 
   const myHeaders = new Headers();
   myHeaders.append(
@@ -58,8 +58,8 @@ const fetchKeywordMovies = async () => {
     page++;
   }
 
-  ordenarPeliculas(); // Asegurar ordenación después de cargar todas las películas
-  is_showing_more.value = false; // Reset "Show More" button
+  ordenarPeliculas(); 
+  is_showing_more.value = false;
 };
 
 const fetchKeywordData = async () => {
@@ -88,7 +88,6 @@ const moviesToShow = computed(() => {
     : movies.value.slice(0, Math.ceil(movies.value.length / 2));
 });
 
-// Observar cambios en MenuCategoria y recargar películas
 watch(MenuCategoria, fetchKeywordMovies);
 
 const goToTV = () => {};
@@ -96,7 +95,6 @@ const goToMovies = (genreId) => {
   router.push({ path: `/movie/${genreId}` });
 };
 
-// Reordenar películas cuando cambie el menú de orden o se modifique la lista de películas
 watch([MenuOrden, movies], ordenarPeliculas);
 
 onMounted(async () => {
