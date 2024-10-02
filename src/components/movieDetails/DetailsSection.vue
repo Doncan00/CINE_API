@@ -41,7 +41,8 @@
                 backdrop_path.value = response.backdrop_path;
 
                 response.genres.forEach(e => {
-                    genres.value.push(e.name);
+                    
+                    genres.value.push(e);
                 });
 
                 runtime.value = response.runtime;
@@ -165,7 +166,7 @@
                 <h1>{{ certification }}</h1>
                 <h1>{{ release_date }}</h1> 
                 <h1>({{ country }})</h1>
-                <button v-for="genre in genres" @click="goToGenre(genre.id)">{{ genre }}</button>
+                <button v-for="genre in genres" @click="goToGenre(genre.id)">{{ genre.name }}</button>
                 <h1>{{ runtime }}</h1>
             </div>
             

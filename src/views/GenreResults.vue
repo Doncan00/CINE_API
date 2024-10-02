@@ -1,8 +1,7 @@
 <script setup>
 import MovieCard from "@/components/KeywordResults/MovieCard.vue";
 import { ref, onMounted, computed, watch } from "vue";
-import { useRoute } from "vue-router";
-import { useRouter } from 'vue-router';
+import { useRoute, useRouter } from "vue-router";
 
 const router = useRouter();
 const movies = ref([]);
@@ -32,8 +31,7 @@ const fetchKeywordMovies = async () => {
 
   const myHeaders = new Headers();
   myHeaders.append(
-    "Authorization",
-    "Bearer eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiI5YTZiZDFhOTcyM2EzY2VhMDI2YTllMjUyMDQ2YjMxNiIsIm5iZiI6MTcyNzIyOTY5MC43OTM1OTQsInN1YiI6IjY2ZjJmNWYwYTk3ODgwMTQ4ZjNiOTBiNSIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.fZfgCHZz_ePmrG_w_m4-p4_wbnkBfoUD1N1DKRDDMh4"
+    "Authorization", "Bearer eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiI5YTZiZDFhOTcyM2EzY2VhMDI2YTllMjUyMDQ2YjMxNiIsIm5iZiI6MTcyNzIyOTY5MC43OTM1OTQsInN1YiI6IjY2ZjJmNWYwYTk3ODgwMTQ4ZjNiOTBiNSIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.fZfgCHZz_ePmrG_w_m4-p4_wbnkBfoUD1N1DKRDDMh4"
   );
 
   const requestOptions = {
@@ -85,9 +83,13 @@ const fetchKeywordData = async () => {
 };
 
 const goToMovieDetails = (movieId) => {
-  router.push({ path: `/movie-details/${movieId}` });
-};
 
+if (MenuCategoria.value === 'movie'){
+  router.push({ path: `/movie-details/${movieId}` });
+} else {
+  router.push({ path: `/series-details/${movieId}` });
+}
+};
 const moviesToShow = computed(() => {
   return is_showing_more.value
     ? movies.value
