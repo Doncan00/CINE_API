@@ -1,7 +1,13 @@
 <script setup>
     import { ref, onMounted } from 'vue';
+    import { useRoute } from 'vue-router';
 
     const principal_cast = ref([])
+
+    const movie_id = ref(0)
+
+    const route = useRoute()
+    movie_id.value = route.params.id
 
     onMounted( async () => {
         
@@ -16,7 +22,7 @@
             redirect: "follow"
             };
 
-            fetch("https://api.themoviedb.org/3/movie/957452/credits", requestOptions)
+            fetch(`https://api.themoviedb.org/3/movie/${movie_id.value}/credits`, requestOptions)
             .then((response) => response.json())
             .then((response) => {
 

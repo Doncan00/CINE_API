@@ -17,15 +17,14 @@
     const overview = ref('')
     const directors = ref([])
     const screenplayers = ref([])
+
     const movie_id = ref(0)
 
     const route = useRoute()
     movie_id.value = route.params.id
-    
+
     onMounted( async () => {
         
-        console.log(movie_id.value);
-
         //movie
         try {
             const requestOptions = {
@@ -33,7 +32,7 @@
             redirect: "follow"
             };
     
-            fetch("https://api.themoviedb.org/3/movie/957452?api_key=9a6bd1a9723a3cea026a9e252046b316", requestOptions)
+            fetch(`https://api.themoviedb.org/3/movie/${movie_id.value}?api_key=9a6bd1a9723a3cea026a9e252046b316`, requestOptions)
             .then((response) => response.json())
             .then((response) => {
                 title.value = response.title;
@@ -64,7 +63,7 @@
             redirect: "follow"
             };
 
-            fetch("https://api.themoviedb.org/3/movie/957452/release_dates", requestOptions)
+            fetch(`https://api.themoviedb.org/3/movie/${movie_id.value}/release_dates`, requestOptions)
             .then((response) => response.json())
             .then((response) => {
 
@@ -109,7 +108,7 @@
             redirect: "follow"
             };
 
-            fetch("https://api.themoviedb.org/3/movie/957452/credits", requestOptions)
+            fetch(`https://api.themoviedb.org/3/movie/${movie_id.value}/credits`, requestOptions)
             .then((response) => response.json())
             .then((response) => {
                 let crew = response.crew;

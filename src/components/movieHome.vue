@@ -161,6 +161,10 @@ const prevSlide5 = () => {
     currentSlide5.value -= itemsPerView;
   }
 };
+
+const goToMovieDetails = (movieId) => {
+  router.push({ path: `/movie-details/${movieId}` });
+};
 </script>
 
 <template>
@@ -187,6 +191,7 @@ const prevSlide5 = () => {
           v-for="(movie, index) in trendingMovies"
           :key="index"
           class="carousel-item"
+          @click="goToMovieDetails(movie.id)"
         >
           <div v-if="movie.poster_path">
             <img :src="'https://image.tmdb.org/t/p/w500' + movie.poster_path" :alt="movie.title || movie.name" />

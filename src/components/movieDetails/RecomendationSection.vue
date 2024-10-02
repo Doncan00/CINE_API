@@ -1,8 +1,14 @@
 <script setup>
 
     import { ref, onMounted } from "vue"
+    import { useRoute } from "vue-router";
 
     const recomendations = ref([]);
+
+    const movie_id = ref(0)
+
+    const route = useRoute()
+    movie_id.value = route.params.id
 
     const fetchRecomendations = async () => {
         const myHeaders = new Headers();
@@ -14,7 +20,7 @@
         redirect: "follow"
         };
 
-        fetch("https://api.themoviedb.org/3/movie/957452/recommendations", requestOptions)
+        fetch(`https://api.themoviedb.org/3/movie/${movie_id.value}/recommendations`, requestOptions)
         .then((response) => response.json())
         .then((response) => {
             recomendations.value = response.results;

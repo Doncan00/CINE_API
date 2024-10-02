@@ -1,5 +1,4 @@
 <script setup>
-  import KeywordResults from './KeywordResults.vue';
 
 </script>
 

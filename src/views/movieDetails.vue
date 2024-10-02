@@ -1,12 +1,19 @@
 <script setup>
-    import { ref, onMounted } from "vue";
-    import DetailsSection from "./components/MovieDetails/DetailsSection.vue";
-    import PrincipalCastSection from "./components/MovieDetails/PrincipalCastSection.vue";
-    import SocialSection from "./components/MovieDetails/SocialSection.vue";
-    import MidiaSection from "./components/MovieDetails/MidiaSection.vue";
-    import InformationResume from "./components/MovieDetails/InformationResume.vue";
-    import ScoreContributors from "./components/MovieDetails/ScoreContributors.vue";
-    import RecomendationSection from "./components/MovieDetails/RecomendationSection.vue"
+    import { ref } from "vue";
+    import { useRoute } from "vue-router";
+    import DetailsSection from "@/components/movieDetails/DetailsSection.vue";
+    import PrincipalCastSection from "@/components/MovieDetails/PrincipalCastSection.vue";
+    import SocialSection from "@/components/MovieDetails/SocialSection.vue";
+    import MidiaSection from "@/components/MovieDetails/MidiaSection.vue";
+    import InformationResume from "@/components/MovieDetails/InformationResume.vue";
+    import ScoreContributors from "@/components/MovieDetails/ScoreContributors.vue";
+    import RecomendationSection from "@/components/MovieDetails/RecomendationSection.vue"
+
+    const movie_id = ref(0)
+
+    const route = useRoute()
+    movie_id.value = route.params.id
+
 </script>
 
 <template>
@@ -37,10 +44,6 @@
                 </div>
     
                 <div class="gray-line"></div>
-    
-                <div class="recomendations-section">
-                    <recomendationSection />
-                </div>
             </div>
              
             <div class="information-right-side">

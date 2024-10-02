@@ -1,6 +1,7 @@
 <script setup>
 
     import { ref, onMounted } from 'vue';
+    import { useRoute } from 'vue-router';
 
     const videos = ref([])
     const images = ref([])
@@ -12,6 +13,11 @@
 
     const midia_showing = ref(0)
 
+    const movie_id = ref(0)
+
+    const route = useRoute()
+    movie_id.value = route.params.id
+
     const fetchVideos = async () => {
         const myHeaders = new Headers();
         myHeaders.append("Authorization", "Bearer eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiI5YTZiZDFhOTcyM2EzY2VhMDI2YTllMjUyMDQ2YjMxNiIsIm5iZiI6MTcyNzIyOTY5MC43OTM1OTQsInN1YiI6IjY2ZjJmNWYwYTk3ODgwMTQ4ZjNiOTBiNSIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.fZfgCHZz_ePmrG_w_m4-p4_wbnkBfoUD1N1DKRDDMh4");
@@ -22,7 +28,7 @@
         redirect: "follow"
         };
 
-        fetch("https://api.themoviedb.org/3/movie/957452/videos", requestOptions)
+        fetch(`https://api.themoviedb.org/3/movie/${movie_id.value}/videos`, requestOptions)
         .then((response) => response.json())
         .then((response) => {
             for (let i = 0; i < 6; i++) {
@@ -43,7 +49,7 @@
         redirect: "follow"
         };
 
-        fetch("https://api.themoviedb.org/3/movie/957452/images", requestOptions)
+        fetch(`https://api.themoviedb.org/3/movie/${movie_id.value}/images`, requestOptions)
         .then((response) => response.json())
         .then((response) => {
 
