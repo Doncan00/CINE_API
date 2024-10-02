@@ -34,7 +34,7 @@
       <div class="slider">
         <div class="slider-wrapper">
           <div class="multimedia-grid">
-            <div class="multimedia-card" v-for="actor in credits" :key="actor.id">
+            <div @click="goToArtist(actor.id)" class="multimedia-card" v-for="actor in credits" :key="actor.id">
               <img v-if="actor.profile_path" :src="`https://image.tmdb.org/t/p/w500${actor.profile_path}`" alt="Foto de actor" />
               <h3>{{ actor.name }}</h3>
               <p>Personaje: {{ actor.character }}</p>
@@ -46,7 +46,7 @@
       <!-- Palabras clave -->
       <h2>Palabras clave</h2>
       <div class="multimedia-grid">
-        <div class="keyword-card" v-for="keyword in keywords" :key="keyword.id">
+        <div @click="goToKeyWords(keyword.id)" class="keyword-card" v-for="keyword in keywords" :key="keyword.id">
           {{ keyword.name }}
         </div>
       </div>
@@ -261,7 +261,13 @@ export default {
   },
   goToSerieInfo(recommendationId) {
       this.$router.push({ path: `/series-details/${recommendationId}` });
-    }
+    },
+    goToArtist(artistId) {
+      this.$router.push({ path: `/artist-details/${artistId}` });
+    },
+    goToKeyWords(keywordId) {
+      this.$router.push({ path: `/keyword/${keywordId}` });
+    },
 
   },
 };

@@ -55,11 +55,40 @@
 
 .episode-image {
   max-width: 300px;
-  width: auto; /* Ajusta el tamaño de la imagen según sea necesario */
-  height: fill; /* Mantiene la relación de aspecto */
+  width: auto;
+  max-height: fit-content; /* Mantiene la relación de aspecto */
   margin-right: 10px; /* Espacio entre la imagen y la información */
 }
 
 .episode-info {
   flex-grow: 1; /* Hace que esta sección tome el resto del espacio */
+}
+.episode-card {
+  border: 1px solid #ccc;
+  margin: 10px 0;
+  padding: 10px;
+  position: relative; /* Para mantener el contenido dentro de la tarjeta */
+  flex-direction: column;
+}
+
+.cast-section {
+  margin-top: 10px;
+  border-top: 1px solid #ccc; /* Añade una línea separadora */
+  padding-top: 10px; /* Espaciado superior para que no esté pegado */
+}
+
+.multimedia-grid {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px; /* Espaciado entre las tarjetas */
+}
+
+.multimedia-card {
+  width: 100px; /* Ajusta el ancho según tus necesidades */
+  text-align: center; /* Centra el contenido */
+}
+
+.multimedia-card img {
+  width: 100%; /* Ajusta la imagen para que ocupe todo el ancho de la tarjeta */
+  border-radius: 8px; /* Agrega bordes redondeados si lo deseas */
 }

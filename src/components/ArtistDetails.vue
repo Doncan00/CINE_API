@@ -1,5 +1,11 @@
 <script setup>
 import { ref, onMounted } from 'vue';
+import { useRoute } from "vue-router";
+
+const artist_id = ref(0)
+const route = useRoute()
+artist_id.value = route.params.id
+
 
 const person = ref(null);
 const known_For = ref([]);
@@ -17,7 +23,7 @@ onMounted(async () => {
     };
 
     // ifno actor
-    fetch(`https://api.themoviedb.org/3/person/${actorId}?language=es-ES`, requestOptions)
+    fetch(`https://api.themoviedb.org/3/person/${artist_id.value}?language=es-ES`, requestOptions)
         .then(response => response.json())
         .then(result => {
             person.value = result;
@@ -25,7 +31,7 @@ onMounted(async () => {
         .catch(error => console.log('error', error));
 
     // conocido por info
-    fetch(`https://api.themoviedb.org/3/person/${actorId}/combined_credits?language=es-ES`, requestOptions)
+    fetch(`https://api.themoviedb.org/3/person/${artist_id.value}/combined_credits?language=es-ES`, requestOptions)
         .then(response => response.json())
         .then(result => {
             const knowMovies = result.cast;
