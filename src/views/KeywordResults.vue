@@ -46,7 +46,7 @@ const fetchKeywordMovies = async () => {
       : `https://api.themoviedb.org/3/discover/tv`;
     
     const response = await fetch(
-      `${baseUrl}?with_genre=${keyword_id.value}&page=${page}`,
+      `${baseUrl}?with_keyword=${keyword_id.value}&page=${page}`,
       requestOptions
     );
     const data = await response.json();
@@ -90,11 +90,6 @@ const moviesToShow = computed(() => {
 
 // Observar cambios en MenuCategoria y recargar películas
 watch(MenuCategoria, fetchKeywordMovies);
-
-const goToTV = () => {};
-const goToMovies = (keywordId) => {
-  router.push({ path: `/movie/${keywordId}` });
-};
 
 // Reordenar películas cuando cambie el menú de orden o se modifique la lista de películas
 watch([MenuOrden, movies], ordenarPeliculas);

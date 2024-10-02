@@ -2,7 +2,9 @@
 import MovieCard from "@/components/KeywordResults/MovieCard.vue";
 import { ref, onMounted, computed, watch } from "vue";
 import { useRoute } from "vue-router";
+import { useRouter } from 'vue-router';
 
+const router = useRouter();
 const movies = ref([]);
 const total_results = ref(0);
 const genre_name = ref("");
@@ -82,6 +84,10 @@ const fetchKeywordData = async () => {
     });
 };
 
+const goToMovieDetails = (movieId) => {
+  router.push({ path: `/movie-details/${movieId}` });
+};
+
 const moviesToShow = computed(() => {
   return is_showing_more.value
     ? movies.value
@@ -89,11 +95,6 @@ const moviesToShow = computed(() => {
 });
 
 watch(MenuCategoria, fetchKeywordMovies);
-
-const goToTV = () => {};
-const goToMovies = (genreId) => {
-  router.push({ path: `/movie/${genreId}` });
-};
 
 watch([MenuOrden, movies], ordenarPeliculas);
 
@@ -132,6 +133,7 @@ onMounted(async () => {
         :title="movie.title"
         :release_date="movie.release_date"
         :overview="movie.overview"
+        @click="goToMovieDetails(movie.id)"
       />
     </div>
 
