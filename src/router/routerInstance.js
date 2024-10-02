@@ -8,7 +8,8 @@ import { createWebHistory } from 'vue-router'
 const routes = [
   { path: '/', component: movieHome },
   { path: '/movie-details/:id', component: MovieDetails },
-  { path: '/keyword/:id', component: KeywordResults },
+  { path: 'movies/keyword/:id', component: KeywordResults },
+  { path: 'series/keyword/:id', component: KeywordResults },
 ]
 
 const router = createRouter({
