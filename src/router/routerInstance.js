@@ -3,16 +3,12 @@ import { createMemoryHistory, createRouter } from 'vue-router'
 import movieHome from '@/components/movieHome.vue'
 import MovieDetails from '@/views/movieDetails.vue'
 import SeriesInfo from '@/components/tvDetails/SeriesInfo.vue'
-<<<<<<< HEAD
-import KeywordResults from '@/KeywordResults.vue'
-import GenreResults from '@/GenreResults.vue'
-=======
 import KeywordResults from '@/views/KeywordResults.vue'
->>>>>>> bc12c516c57fa231ebff143e388d8d1e6daa1617
 import Login from '@/components/Login.vue'
 import { createWebHistory } from 'vue-router'
 import SeasonsInfo from '@/components/tvDetails/SeasonsInfo.vue'
 import ArtistDetails from '@/components/ArtistDetails.vue'
+import GenreResults from '@/views/GenreResults.vue'
 
 const routes = [
   { path: '/', component: movieHome },
