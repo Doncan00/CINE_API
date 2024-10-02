@@ -24,7 +24,7 @@
         <div v-if="episode.showCast" class="cast-section">
           <h4>Reparto</h4>
           <div class="multimedia-grid">
-            <div class="multimedia-card" v-for="actor in episode.guest_stars" :key="actor.id">
+            <div @click="goToArtist(actor.id)" class="multimedia-card-seasons" v-for="actor in episode.guest_stars" :key="actor.id">
               <img v-if="actor.profile_path" :src="'https://image.tmdb.org/t/p/w500' + actor.profile_path" alt="Foto de actor" />
               <h5>{{ actor.name }}</h5>
               <p>Personaje: {{ actor.character }}</p>
@@ -89,7 +89,11 @@ export default {
       } catch (error) {
         console.error("Error al obtener el reparto del episodio:", error);
       }
-    }
+    },
+    goToArtist(artistId) {
+      this.$router.push({ path: `/artist-details/${artistId}` });
+    },
   },
 };
+
 </script>
