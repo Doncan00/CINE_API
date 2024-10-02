@@ -1,5 +1,9 @@
 <script setup>
 import { ref, onMounted } from "vue";
+import { useRouter } from 'vue-router';
+
+
+const router = useRouter();
 
 const trendingMovies = ref([]);
 const popularMovies = ref([]);
@@ -59,6 +63,12 @@ onMounted(async () => {
   // Obtener TV gratis
   await fetchMovies("https://api.themoviedb.org/3/discover/tv?with_watch_monetization_types=free&page=2", freeTv);
 });
+
+//Logut
+const logout = () => {
+  alert("Sesión cerrada");
+  router.push('/Login');
+};
 
 // Función para obtener películas
 const fetchMovies = async (url, movieList) => {
@@ -159,8 +169,11 @@ const prevSlide5 = () => {
       <h1>Te damos la bienvenida.</h1>
       <h2>Millones de películas, series y gente por descrubir. Explora ya.</h2>
     </div>
+    <button @click="logout" class="logout-button">Cerrar sesión</button>
   </section>
   <div class="carousel-container">
+    <br>
+    <br>
     <h1>Tendencias</h1>
 
     <p v-if="errorMessage">{{ errorMessage }}</p>
@@ -282,7 +295,7 @@ const prevSlide5 = () => {
 }
 
 .carousel-container {
-  width: 200%;
+  width: 100%;
   overflow: hidden;
   padding: 0;
   position: relative;
@@ -340,5 +353,22 @@ button {
 
 .next-button {
   right: 0;
+}
+
+.logout-button {
+  position: absolute;
+  top: 20px;
+  right: 50px;
+  background-color: #ff4b5c;
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  cursor: pointer;
+  font-size: .8rem;
+  border-radius: 5px;
+}
+
+.logout-button:hover {
+  background-color: #ff7b8a;
 }
 </style>

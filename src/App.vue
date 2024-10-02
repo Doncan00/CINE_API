@@ -5,7 +5,6 @@ import SeriesInfo from './components/tvDetails/SeriesInfo.vue';
 
 <template>
   <div>
-    <SeriesInfo/>
-    <!-- <RouterView></RouterView> -->
+    <RouterView></RouterView>
   </div>
 </template>
