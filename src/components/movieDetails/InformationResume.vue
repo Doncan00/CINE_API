@@ -1,7 +1,7 @@
 <script setup>
     
     import { ref, onMounted } from 'vue';
-    import { useRouter } from "vue-router";
+    import { useRoute } from "vue-router";
 
     const original_title = ref('')
     const status = ref('')
@@ -14,7 +14,10 @@
     const instagram_id = ref('')
     const homepage = ref('')
 
-    const router = useRouter();
+    const movie_id = ref(0)
+
+    const route = useRoute()
+    movie_id.value = route.params.id
 
     const fetchInformation = async () => {
         const requestOptions = {
@@ -22,7 +25,7 @@
         redirect: "follow"
         };
 
-        fetch("https://api.themoviedb.org/3/movie/957452?api_key=9a6bd1a9723a3cea026a9e252046b316", requestOptions)
+        fetch(`https://api.themoviedb.org/3/movie/${movie_id.value}?api_key=9a6bd1a9723a3cea026a9e252046b316`, requestOptions)
         .then((response) => response.json())
         .then((response) => {
             original_title.value = response.original_title;
@@ -44,7 +47,7 @@
         redirect: "follow"
         };
 
-        fetch("https://api.themoviedb.org/3/movie/957452/keywords", requestOptions)
+        fetch(`https://api.themoviedb.org/3/movie/${movie_id.value}/keywords`, requestOptions)
         .then((response) => response.json())
         .then((response) => {
             keywords.value = response.keywords;
@@ -61,7 +64,7 @@
         redirect: "follow"
         };
 
-        fetch("https://api.themoviedb.org/3/movie/957452/external_ids", requestOptions)
+        fetch(`https://api.themoviedb.org/3/movie/${movie_id.value}/external_ids`, requestOptions)
         .then((response) => response.json())
         .then((response) => {
             facebook_id.value = response.facebook_id;

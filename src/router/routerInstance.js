@@ -1,9 +1,9 @@
 import { createMemoryHistory, createRouter } from 'vue-router'
 
 import movieHome from '@/components/movieHome.vue'
-import MovieDetails from '@/movieDetails.vue'
+import MovieDetails from '@/views/movieDetails.vue'
 import SeriesInfo from '@/components/tvDetails/SeriesInfo.vue'
-import KeywordResults from '@/KeywordResults.vue'
+import KeywordResults from '@/views/KeywordResults.vue'
 import Login from '@/components/Login.vue'
 import { createWebHistory } from 'vue-router'
 import SeasonsInfo from '@/components/tvDetails/SeasonsInfo.vue'

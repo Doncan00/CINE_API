@@ -1,6 +1,7 @@
 <script setup>
 
     import { ref, onMounted } from 'vue';
+    import { useRoute } from 'vue-router';
 
     const review_author = ref('')
     const review_avatar_path = ref('') 
@@ -9,6 +10,11 @@
     const review_content = ref('')
 
     const is_Review_Showing = ref(true)
+
+    const movie_id = ref(0)
+
+    const route = useRoute()
+    movie_id.value = route.params.id
 
     onMounted( async () => {
 
@@ -22,7 +28,7 @@
             redirect: "follow"
             };
 
-            fetch("https://api.themoviedb.org/3/movie/957452/reviews", requestOptions)
+            fetch(`https://api.themoviedb.org/3/movie/${movie_id.value}/reviews`, requestOptions)
             .then((response) => response.json())
             .then((response) => {
                 let results = response.results;
