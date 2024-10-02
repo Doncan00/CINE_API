@@ -2,12 +2,11 @@
     import { ref } from "vue";
     import { useRoute } from "vue-router";
     import DetailsSection from "@/components/movieDetails/DetailsSection.vue";
-    import PrincipalCastSection from "@/components/MovieDetails/PrincipalCastSection.vue";
-    import SocialSection from "@/components/MovieDetails/SocialSection.vue";
-    import MidiaSection from "@/components/MovieDetails/MidiaSection.vue";
-    import InformationResume from "@/components/MovieDetails/InformationResume.vue";
-    import ScoreContributors from "@/components/MovieDetails/ScoreContributors.vue";
-    import RecomendationSection from "@/components/MovieDetails/RecomendationSection.vue"
+    import PrincipalCastSection from "@/components/movieDetails/PrincipalCastSection.vue";
+    import SocialSection from "@/components/movieDetails/SocialSection.vue";
+    import MidiaSection from "@/components/movieDetails/MidiaSection.vue";
+    import RecomendationSection from "@/components/movieDetails/RecomendationSection.vue";
+    import InformationResume from "@/components/movieDetails/InformationResume.vue";
 
     const movie_id = ref(0)
 
