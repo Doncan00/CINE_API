@@ -40,14 +40,17 @@
 
         <!-- Creditos -->
         <h2>Reparto principal</h2>
-        <div class="multimedia-grid">
-          <div class="multimedia-card" v-for="actor in credits" :key="actor.id">
-            <img v-if="actor.profile_path" :src="`https://image.tmdb.org/t/p/w500${actor.profile_path}`"
-              alt="Foto de actor" />
-            <h3>{{ actor.name }}</h3>
-            <p>Personaje: {{ actor.character }}</p>
-          </div>
-        </div>
+<div class="slider">
+  <div class="slider-wrapper">
+    <div class="multimedia-grid">
+      <div class="multimedia-card" v-for="actor in credits" :key="actor.id">
+        <img v-if="actor.profile_path" :src="`https://image.tmdb.org/t/p/w500${actor.profile_path}`" alt="Foto de actor" />
+        <h3>{{ actor.name }}</h3>
+        <p>Personaje: {{ actor.character }}</p>
+      </div>
+    </div>
+  </div>
+</div>
 
         <!-- Palabras clave -->
         <h2>Palabras clave</h2>
@@ -71,17 +74,19 @@
 
 
         <!-- recomendaciones -->
-        <div v-if="recommendations.length">
-          <h2>Recomendaciones</h2>
-          <div class="multimedia-grid">
-            <div class="multimedia-card" v-for="recommendation in recommendations" :key="recommendation.id">
-              <img :src="`https://image.tmdb.org/t/p/w500${recommendation.poster_path}`" alt="Poster" />
-              <h3>{{ recommendation.original_name }}</h3>
-              <p>{{ recommendation.first_air_date }}</p>
-              <p class="calif">Calificación: {{ recommendation.vote_average.toFixed(1) }}</p>
-            </div>
-          </div>
-        </div>
+        <h2>Recomendaciones</h2>
+<div class="slider">
+  <div class="slider-wrapper">
+    <div class="multimedia-grid">
+      <div class="multimedia-card" v-for="recommendation in recommendations" :key="recommendation.id">
+        <img :src="`https://image.tmdb.org/t/p/w500${recommendation.poster_path}`" alt="Poster" />
+        <h3>{{ recommendation.original_name }}</h3>
+        <p>{{ recommendation.first_air_date }}</p>
+        <p class="calif">Calificación: {{ recommendation.vote_average.toFixed(1) }}</p>
+      </div>
+    </div>
+  </div>
+</div>
 
         <!-- Temporadas -->
         <div>
