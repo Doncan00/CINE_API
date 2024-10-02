@@ -121,6 +121,7 @@
             <div class="keyword-card">
                 <button v-for="keyword in keywords" @click="goToKeyword(keyword.id)">
                     <h2 >{{ keyword.name }}</h2>
+                    <h2 >{{ keyword.id }}</h2>
                 </button>
                 </div>
         </div>
