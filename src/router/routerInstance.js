@@ -4,10 +4,18 @@ import movieHome from '@/components/movieHome.vue'
 import MovieDetails from '@/views/movieDetails.vue'
 import SeriesInfo from '@/components/tvDetails/SeriesInfo.vue'
 import KeywordResults from '@/views/KeywordResults.vue'
+<<<<<<< HEAD
 import GenreResults from '@/views/GenreResults.vue'
 import Login from '@/components/Login.vue'
 import { createWebHistory } from 'vue-router'
 import SeasonsInfo from '@/components/tvDetails/SeasonsInfo.vue'
+=======
+import Login from '@/components/Login.vue'
+import { createWebHistory } from 'vue-router'
+import SeasonsInfo from '@/components/tvDetails/SeasonsInfo.vue'
+import ArtistDetails from '@/components/ArtistDetails.vue'
+import GenreResults from '@/views/GenreResults.vue'
+>>>>>>> ed4bbb983dcb08f0e8a6262d661a6b7579dcea5e
 
 const routes = [
   { path: '/', component: movieHome },
