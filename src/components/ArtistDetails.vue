@@ -23,7 +23,7 @@ onMounted(async () => {
     };
 
     // ifno actor
-    fetch(`https://api.themoviedb.org/3/person/${artist_id.value}?language=es-ES`, requestOptions)
+    fetch(`https://api.themoviedb.org/3/person/${artist_id.value}`, requestOptions)
         .then(response => response.json())
         .then(result => {
             person.value = result;
@@ -31,7 +31,7 @@ onMounted(async () => {
         .catch(error => console.log('error', error));
 
     // conocido por info
-    fetch(`https://api.themoviedb.org/3/person/${artist_id.value}/combined_credits?language=es-ES`, requestOptions)
+    fetch(`https://api.themoviedb.org/3/person/${artist_id.value}/combined_credits?`, requestOptions)
         .then(response => response.json())
         .then(result => {
             const knowMovies = result.cast;
