@@ -1,6 +1,7 @@
 <script setup>
 
     import { ref, onMounted } from "vue";
+    import { useRoute } from "vue-router";
 
     const title = ref('')
     const poster_path = ref('')
@@ -16,8 +17,15 @@
     const overview = ref('')
     const directors = ref([])
     const screenplayers = ref([])
+    const movie_id = ref(0)
 
+    const route = useRoute()
+    movie_id.value = route.params.id
+    
     onMounted( async () => {
+        
+        console.log(movie_id.value);
+
         //movie
         try {
             const requestOptions = {

@@ -1,6 +1,7 @@
 <script setup>
     
     import { ref, onMounted } from 'vue';
+    import { useRouter } from "vue-router";
 
     const original_title = ref('')
     const status = ref('')
@@ -12,6 +13,8 @@
     const twitter_id = ref('')
     const instagram_id = ref('')
     const homepage = ref('')
+
+    const router = useRouter();
 
     const fetchInformation = async () => {
         const requestOptions = {
@@ -67,6 +70,11 @@
         })
     }
 
+    const goToKeyword = (keywordId) => {
+        
+        router.push({ path: `/keyword/${keywordId}`})
+    }
+
     onMounted(() => {
         fetchInformation();
         fetchKeyword();
@@ -107,8 +115,10 @@
         <div class="keywords">
             <h1>Palabras clave</h1>
             <div class="keyword-card">
-                <h2 v-for="keyword in keywords">{{ keyword.name }}</h2>
-            </div>
+                <button v-for="keyword in keywords" @click="goToKeyword(keyword.id)">
+                    <h2 >{{ keyword.name }}</h2>
+                </button>
+                </div>
         </div>
 
     </div>

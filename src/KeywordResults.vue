@@ -1,13 +1,19 @@
 <script setup>
 
     import { ref, onMounted, computed } from "vue";
+    import { useRoute } from "vue-router";
+
     import MovieCard from "./components/KeywordResults/MovieCard.vue";
 
     const movies = ref([])
     const total_results = ref(0)
     const keyword_name = ref('')
+    const keyword_id = ref(0)
 
     const is_showing_more = ref(false)
+
+    const route = useRoute()
+    keyword_id.value = route.params.id
 
     const fetchKeywordMovies = async () => {
 
@@ -25,7 +31,7 @@
         
         while (page <= totalPages) {
     
-            const response = await fetch(`https://api.themoviedb.org/3/discover/movie?with_keywords=815&page=${page}`, requestOptions);
+            const response = await fetch(`https://api.themoviedb.org/3/discover/movie?with_keywords=${keyword_id.value}&page=${page}`, requestOptions);
             const data = await response.json();
 
             movies.value = [...movies.value, ...data.results];
@@ -47,7 +53,7 @@
         redirect: "follow"
         };
 
-        fetch("https://api.themoviedb.org/3/keyword/815", requestOptions)
+        fetch(`https://api.themoviedb.org/3/keyword/${keyword_id.value}`, requestOptions)
         .then((response) => response.json())
         .then((response) => {
             keyword_name.value = response.name;
@@ -60,7 +66,9 @@
             : movies.value.slice(0, Math.ceil(movies.value.length / 2))
     })
 
-    onMounted(() => {
+    onMounted( async () => {
+        console.log(keyword_id.value);
+
         fetchKeywordMovies();
         fetchKeywordData();
     })
