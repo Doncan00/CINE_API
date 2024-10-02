@@ -15,7 +15,7 @@ const routes = [
   { path: '/keyword/:id', component: KeywordResults },
   { path: '/series-details/:id', component: SeriesInfo },
   { path: '/series-details/:id/season/:seasonId', component: SeasonsInfo },
-  { path: '/artist-details/:id', component: ArtistDetails, props: true},
+  { path: '/artist-details/:id', component: ArtistDetails},
   
   { path: '/Login', component: Login },
 ]
