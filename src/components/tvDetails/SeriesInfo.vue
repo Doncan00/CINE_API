@@ -46,7 +46,7 @@
       <!-- Palabras clave -->
       <h2>Palabras clave</h2>
       <div class="multimedia-grid">
-        <div class="keyword-card" v-for="keyword in keywords" :key="keyword.id">
+        <div @click="goToKeyWords(keyword.id)" class="keyword-card" v-for="keyword in keywords" :key="keyword.id">
           {{ keyword.name }}
         </div>
       </div>
@@ -264,6 +264,9 @@ export default {
     },
     goToArtist(artistId) {
       this.$router.push({ path: `/artist-details/${artistId}` });
+    },
+    goToKeyWords(keywordId) {
+      this.$router.push({ path: `/keyword/${keywordId}` });
     },
 
   },
