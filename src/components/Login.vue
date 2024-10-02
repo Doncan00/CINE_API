@@ -84,11 +84,11 @@
     padding: 20px;
     text-align: left;
     font-family: Arial, sans-serif;
-    color: #333;
+    color: rgb(213, 213, 213);
   }
   
   h2 {
-    color: #111;
+    color: #fff;
     font-size: 24px;
     font-weight: 600;
     margin-bottom: 10px;
@@ -97,7 +97,7 @@
   p {
     font-size: 14px;
     line-height: 1.5;
-    color: #666;
+    color: #dedede;
     margin-bottom: 20px;
   }
   
@@ -111,6 +111,7 @@
   
   .input-group label {
     display: block;
+    font-weight: bold;
     margin-bottom: 5px;
   }
   

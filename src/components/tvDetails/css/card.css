@@ -40,3 +40,26 @@
   padding: 10px;
   text-align: center;
 }
+
+.episode-card {
+  border: 1px solid #ccc;
+  margin: 10px 0;
+  padding: 10px;
+  display: flex; /* Usar flexbox para la disposición */
+}
+
+.episode-content {
+  display: flex; /* Flexbox para la disposición interna */
+  width: 100%; /* Asegura que ocupa todo el ancho de la tarjeta */
+}
+
+.episode-image {
+  max-width: 300px;
+  width: auto; /* Ajusta el tamaño de la imagen según sea necesario */
+  height: fill; /* Mantiene la relación de aspecto */
+  margin-right: 10px; /* Espacio entre la imagen y la información */
+}
+
+.episode-info {
+  flex-grow: 1; /* Hace que esta sección tome el resto del espacio */
+}

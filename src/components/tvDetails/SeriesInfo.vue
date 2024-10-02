@@ -66,7 +66,7 @@
       <div class="slider">
         <div class="slider-wrapper">
           <div class="multimedia-grid">
-            <div class="multimedia-card" v-for="recommendation in recommendations" :key="recommendation.id">
+            <div @click="goToSerieInfo(recommendation.id)" class="multimedia-card" v-for="recommendation in recommendations" :key="recommendation.id">
               <img :src="`https://image.tmdb.org/t/p/w500${recommendation.poster_path}`" alt="Poster" />
               <h3>{{ recommendation.original_name }}</h3>
               <p>{{ recommendation.first_air_date }}</p>
@@ -81,8 +81,8 @@
           <h2>Temporadas:</h2>
           <ul>
     <div class="multimedia-grid">
-      <div class="keyword-card" v-for="season in serieInfo.seasons" :key="season.id"
-           @click="goToSeasonInfo(season.id)">
+      <div class="keyword-card" v-for="season in serieInfo.seasons" :key="season.season_number"
+           @click="goToSeasonInfo(season.season_number)">
         {{ season.name }}
       </div>
     </div>
@@ -138,12 +138,14 @@ export default {
   },
   mounted() {
 
-    // const route = useRoute()
-    // const serieId = route.params.id;
+    const route = useRoute()
+    const serieId = route.params.id;
 
-    const serieId = 194764;
     this.fetchSerieInfo(serieId);
   },
+  watch: {
+  '$route.params.id': 'fetchSerieInfo'
+},
   methods: {
     async fetchSerieInfo(serieId) {
       try {
@@ -253,10 +255,13 @@ export default {
         console.error("Error al obtener las recomendaciones:", error);
       }
     },
-    goToSeasonInfo(seasonId) {
+    goToSeasonInfo(season_number) {
     const serieId = this.serieInfo.id;
-    this.$router.push({ path: `/series-details/${serieId}/season/${seasonId}` });
-  }
+    this.$router.push({ path: `/series-details/${serieId}/season/${season_number}` });
+  },
+  goToSerieInfo(recommendationId) {
+      this.$router.push({ path: `/series-details/${recommendationId}` });
+    }
 
   },
 };
