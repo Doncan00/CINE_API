@@ -1,8 +1,9 @@
 <template>
   <div>
     <div v-if="selectSeriesFlag && serieInfo" class="selectedMultimedia">
-      
-      <img v-if="serieInfo.backdrop_path" :src="`https://image.tmdb.org/t/p/w500${serieInfo.backdrop_path}`" class="multimedia-image" alt="Series Poster" />
+
+      <img v-if="serieInfo.backdrop_path" :src="`https://image.tmdb.org/t/p/w500${serieInfo.backdrop_path}`"
+        class="multimedia-image" alt="Series Poster" />
       <h1>{{ serieInfo.original_name }}</h1>
       <p>Calificación promedio: {{ serieInfo.vote_average?.toFixed(1) }}</p>
       <p class="release-date">Fecha de estreno: {{ serieInfo.first_air_date }}</p>
@@ -35,7 +36,8 @@
         <div class="slider-wrapper">
           <div class="multimedia-grid">
             <div @click="goToArtist(actor.id)" class="multimedia-card" v-for="actor in credits" :key="actor.id">
-              <img v-if="actor.profile_path" :src="`https://image.tmdb.org/t/p/w500${actor.profile_path}`" alt="Foto de actor" />
+              <img v-if="actor.profile_path" :src="`https://image.tmdb.org/t/p/w500${actor.profile_path}`"
+                alt="Foto de actor" />
               <h3>{{ actor.name }}</h3>
               <p>Personaje: {{ actor.character }}</p>
             </div>
@@ -55,9 +57,12 @@
       <!-- Trailer -->
       <div v-if="videos.length">
         <h2>Official Trailers</h2>
-        <div v-for="video in videos.filter(video => video.type === 'Trailer' && video.name.includes('Official Trailer'))" :key="video.id">
+        <div
+          v-for="video in videos.filter(video => video.type === 'Trailer' && video.name.includes('Official Trailer'))"
+          :key="video.id">
           <h3>{{ video.name }}</h3>
-          <iframe width="560" height="315" :src="`https://www.youtube.com/embed/${video.key}`" frameborder="0" allowfullscreen></iframe>
+          <iframe width="560" height="315" :src="`https://www.youtube.com/embed/${video.key}`" frameborder="0"
+            allowfullscreen></iframe>
         </div>
       </div>
 
@@ -66,7 +71,8 @@
       <div class="slider">
         <div class="slider-wrapper">
           <div class="multimedia-grid">
-            <div @click="goToSerieInfo(recommendation.id)" class="multimedia-card" v-for="recommendation in recommendations" :key="recommendation.id">
+            <div @click="goToSerieInfo(recommendation.id)" class="multimedia-card"
+              v-for="recommendation in recommendations" :key="recommendation.id">
               <img :src="`https://image.tmdb.org/t/p/w500${recommendation.poster_path}`" alt="Poster" />
               <h3>{{ recommendation.original_name }}</h3>
               <p>{{ recommendation.first_air_date }}</p>
@@ -78,19 +84,21 @@
 
       <!-- Temporadas -->
       <div>
-          <h2>Temporadas:</h2>
-          <ul>
-    <div class="multimedia-grid">
-      <div class="keyword-card" v-for="season in serieInfo.seasons" :key="season.season_number"
-           @click="goToSeasonInfo(season.season_number)">
-        {{ season.name }}
+        <h2>Temporadas:</h2>
+        <ul>
+          <div class="multimedia-grid">
+            <div class="keyword-card" v-for="season in serieInfo.seasons" :key="season.season_number"
+              @click="goToSeasonInfo(season.season_number)">
+              {{ season.name }}
+            </div>
+          </div>
+        </ul>
       </div>
-    </div>
-  </ul>
-        </div>
 
       <br>
-      <button @click="selectSeriesFlag = false">Regresar</button>
+      <div @click="goToHome()">
+        <button>Regresar</button>
+      </div>
     </div>
   </div>
 </template>
@@ -144,8 +152,8 @@ export default {
     this.fetchSerieInfo(serieId);
   },
   watch: {
-  '$route.params.id': 'fetchSerieInfo'
-},
+    '$route.params.id': 'fetchSerieInfo'
+  },
   methods: {
     async fetchSerieInfo(serieId) {
       try {
@@ -256,10 +264,10 @@ export default {
       }
     },
     goToSeasonInfo(season_number) {
-    const serieId = this.serieInfo.id;
-    this.$router.push({ path: `/series-details/${serieId}/season/${season_number}` });
-  },
-  goToSerieInfo(recommendationId) {
+      const serieId = this.serieInfo.id;
+      this.$router.push({ path: `/series-details/${serieId}/season/${season_number}` });
+    },
+    goToSerieInfo(recommendationId) {
       this.$router.push({ path: `/series-details/${recommendationId}` });
     },
     goToArtist(artistId) {
@@ -267,6 +275,9 @@ export default {
     },
     goToKeyWords(keywordId) {
       this.$router.push({ path: `/keyword/${keywordId}` });
+    },
+    goToHome() {
+      this.$router.push({ path: `/` });
     },
 
   },

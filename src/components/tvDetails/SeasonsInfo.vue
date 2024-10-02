@@ -32,6 +32,10 @@
           </div>
         </div>
       </div>
+      <br>
+      <div @click="goToHome()">
+        <button>Regresar</button>
+      </div>
     </div>
     <div v-else>
       <p>Cargando detalles de la temporada...</p>
@@ -93,6 +97,10 @@ export default {
     goToArtist(artistId) {
       this.$router.push({ path: `/artist-details/${artistId}` });
     },
+    goToHome() {
+      this.$router.push({ path: `/` });
+    },
+    
   },
 };
 
