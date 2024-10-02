@@ -165,6 +165,10 @@ const prevSlide5 = () => {
 const goToMovieDetails = (movieId) => {
   router.push({ path: `/movie-details/${movieId}` });
 };
+
+const goTVDetails = (movieId) => {
+  router.push({ path: `/series-details/${movieId}` });
+};
 </script>
 
 <template>
@@ -208,7 +212,7 @@ const goToMovieDetails = (movieId) => {
     <button @click="nextSlide2" class="next-button">&gt;</button>
     <div class="carousel" v-if="popularMovies.length">
       <div class="carousel-track" :style="{ transform: `translateX(-${currentSlide2 * 160}px)` }">
-        <div v-for="(movie, index) in popularMovies" :key="index" class="carousel-item">
+        <div v-for="(movie, index) in popularMovies" :key="index" class="carousel-item" @click="goToMovieDetails(movie.id)">
           <div v-if="movie.poster_path">
             <img :src="'https://image.tmdb.org/t/p/w500' + movie.poster_path" :alt="movie.title || movie.name" />
           </div>
@@ -224,7 +228,7 @@ const goToMovieDetails = (movieId) => {
     <button @click="nextSlide3" class="next-button">&gt;</button>
     <div class="carousel" v-if="popularTvSeries.length">
       <div class="carousel-track" :style="{ transform: `translateX(-${currentSlide3 * 160}px)` }">
-        <div v-for="(movie, index) in popularTvSeries" :key="index" class="carousel-item">
+        <div v-for="(movie, index) in popularTvSeries" :key="index" class="carousel-item" @click="goTVDetails(movie.id)">
           <div v-if="movie.poster_path">
             <img :src="'https://image.tmdb.org/t/p/w500' + movie.poster_path" :alt="movie.title || movie.name" />
           </div>
@@ -240,7 +244,7 @@ const goToMovieDetails = (movieId) => {
     <button @click="nextSlide4" class="next-button">&gt;</button>
     <div class="carousel" v-if="freeMovies.length">
       <div class="carousel-track" :style="{ transform: `translateX(-${currentSlide4 * 160}px)` }">
-        <div v-for="(movie, index) in freeMovies" :key="index" class="carousel-item">
+        <div v-for="(movie, index) in freeMovies" :key="index" class="carousel-item" @click="goToMovieDetails(movie.id)">
           <div v-if="movie.poster_path">
             <img :src="'https://image.tmdb.org/t/p/w500' + movie.poster_path" :alt="movie.title || movie.name" />
           </div>
@@ -256,7 +260,7 @@ const goToMovieDetails = (movieId) => {
     <button @click="nextSlide5" class="next-button">&gt;</button>
     <div class="carousel" v-if="freeTv.length">
       <div class="carousel-track" :style="{ transform: `translateX(-${currentSlide5 * 160}px)` }">
-        <div v-for="(movie, index) in freeTv" :key="index" class="carousel-item">
+        <div v-for="(movie, index) in freeTv" :key="index" class="carousel-item" @click="goTVDetails(movie.id)">
           <div v-if="movie.poster_path">
             <img :src="'https://image.tmdb.org/t/p/w500' + movie.poster_path" :alt="movie.title || movie.name" />
           </div>
