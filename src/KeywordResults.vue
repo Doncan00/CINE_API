@@ -156,6 +156,26 @@ h1 {
   font-size: 28px;
 }
 
+/* Sección para los menús desplegables */
+.menu-section {
+  display: flex;
+  justify-content: center;
+  margin: 20px;
+}
+
+label {
+  font-size: 18px;
+  margin-right: 20px;
+}
+
+select {
+  padding: 5px;
+  font-size: 16px;
+  border-radius: 4px;
+  border: 1px solid #ccc;
+  margin-left: 10px;
+}
+
 /* Estilos para la sección del contenido */
 .content-section {
   padding: 20px;
@@ -180,6 +200,4 @@ button {
 button:hover {
   background-color: #0056b3;
 }
-
-
 </style>
