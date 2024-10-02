@@ -59,8 +59,10 @@
             if (result.success) {
               this.acceso = true;
               //this.mostrarPeliculas();
-              localStorage.setItem("user_log", JSON.stringify(result));
-              console.log(result);
+              //localStorage.setItem("user_log", JSON.stringify(result));
+              //console.log(result);
+              alert("Sesión iniciada");
+              this.$router.push('/');
             }
           })
           .catch(error => console.log('error', error));

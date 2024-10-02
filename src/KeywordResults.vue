@@ -1,22 +1,29 @@
 <script setup>
-
-    import { ref, onMounted, computed } from "vue";
+    import { ref, onMounted, computed, watch } from "vue";
     import { useRoute } from "vue-router";
-
     import MovieCard from "./components/KeywordResults/MovieCard.vue";
 
     const movies = ref([])
     const total_results = ref(0)
     const keyword_name = ref('')
     const keyword_id = ref(0)
-
     const is_showing_more = ref(false)
+
+    const MenuCategoria = ref("movie");
+    const MenuOrden = ref('descendente');
+
+    const ordenarPeliculas = () => {
+      if (MenuOrden.value === 'descendente') {
+        movies.value.sort((a, b) => b.popularity - a.popularity);
+      } else if (MenuOrden.value === 'ascendente') {
+        movies.value.sort((a, b) => a.popularity - b.popularity);
+      }
+    };
 
     const route = useRoute()
     keyword_id.value = route.params.id
 
     const fetchKeywordMovies = async () => {
-
         let page = 1;
         let totalPages = 1;
         
@@ -30,7 +37,6 @@
         };
         
         while (page <= totalPages) {
-    
             const response = await fetch(`https://api.themoviedb.org/3/discover/movie?with_keywords=${keyword_id.value}&page=${page}`, requestOptions);
             const data = await response.json();
 
@@ -38,9 +44,10 @@
             total_results.value = data.total_results;
             totalPages = data.total_pages;
 
+            ordenarPeliculas();
+
             page++;
         }
-        
     }
 
     const fetchKeywordData = async () => {
@@ -66,6 +73,8 @@
             : movies.value.slice(0, Math.ceil(movies.value.length / 2))
     })
 
+    watch(MenuOrden, ordenarPeliculas);
+
     onMounted( async () => {
         console.log(keyword_id.value);
 
@@ -81,6 +90,22 @@
     <div class="header-section">
         <h1>{{ keyword_name }}</h1>
         <h1>{{ total_results }}</h1>
+    </div>
+
+    <div class="menu-section">
+      <label>
+        <select v-model="MenuCategoria">
+          <option value="movie">Películas</option>
+          <option value="tv">Series</option>
+        </select>
+      </label>
+
+      <label>
+        <select v-model="MenuOrden">
+          <option value="ascendente">Orden ascendente</option>
+          <option value="descendente">Orden descendente</option>
+        </select>
+      </label>
     </div>
 
     <div class="content-section">

@@ -1,0 +1,90 @@
+.selectedMultimedia {
+  position: relative;
+  background-color: #2e2e2e; /* Color de fondo para el área de detalles */
+  padding: 20px;
+  border-radius: 8px;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+  overflow: hidden; /* Evita que el contenido exceda los bordes */
+}
+
+.multimedia-image {
+  width: 100%; /* Imagen ocupa el 100% del ancho */
+  max-height: 600px; /* Altura máxima para la imagen */
+  object-fit: cover; /* Mantiene la proporción de aspecto, recortando si es necesario */
+  border-radius: 8px; /* Bordes redondeados para la imagen */
+}
+
+.selectedMultimedia h1 {
+  margin-top: 20px; /* Espacio entre la imagen y el título */
+  font-size: 1.8em; /* Tamaño del título */
+  color: #ffffff; /* Color del texto */
+}
+
+.selectedMultimedia p {
+  margin: 10px 0; /* Espaciado entre los párrafos */
+  color: #ffffff; /* Color de texto más claro */
+}
+
+.vote-average,
+.release-date,
+.vote-count {
+  font-weight: bold; /* Resaltar información importante */
+}
+
+.overview {
+  margin-top: 20px; /* Espaciado antes de la descripción */
+  line-height: 1.6; /* Mejora la legibilidad del texto */
+}
+
+.network-logo {
+  width: 100px; /* Ajusta el tamaño según sea necesario */
+  height: auto;
+  margin-right: 10px;
+}
+
+
+body {
+  font-family: Arial, sans-serif;
+  margin: 0;
+  padding: 0;
+  background-color: #121212;
+  color: #ffffff;
+}
+
+.background {
+  background-image: url('path/to/your/background/image.jpg'); /* Asegúrate de cambiar esto */
+  background-size: cover;
+  background-position: center;
+  padding: 20px;
+}
+
+h1, h2, h3 {
+  color: #ffffff;
+}
+
+p {
+  color: #cccccc;
+}
+
+button {
+  background-color: #4b4b4b;
+  color: #ffffff;
+  border: none;
+  border-radius: 5px;
+  padding: 10px 20px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+button:hover {
+  background-color: #3a3a3a;
+}
+
+.multimedia-card:hover {
+  transform: scale(1.05);
+}
+
+.release-date {
+  font-style: italic;
+  margin: 10px 0;
+}
