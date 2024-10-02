@@ -7,6 +7,7 @@ import KeywordResults from '@/KeywordResults.vue'
 import Login from '@/components/Login.vue'
 import { createWebHistory } from 'vue-router'
 import SeasonsInfo from '@/components/tvDetails/SeasonsInfo.vue'
+import ArtistDetails from '@/components/ArtistDetails.vue'
 
 const routes = [
   { path: '/', component: movieHome },
@@ -14,6 +15,7 @@ const routes = [
   { path: '/keyword/:id', component: KeywordResults },
   { path: '/series-details/:id', component: SeriesInfo },
   { path: '/series-details/:id/season/:seasonId', component: SeasonsInfo },
+  { path: '/artist-details/:id', component: ArtistDetails },
   
   { path: '/Login', component: Login },
 ]
