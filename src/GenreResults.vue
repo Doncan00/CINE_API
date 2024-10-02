@@ -5,8 +5,8 @@ import MovieCard from "./components/KeywordResults/MovieCard.vue";
 
 const movies = ref([]);
 const total_results = ref(0);
-const keyword_name = ref("");
-const keyword_id = ref(0);
+const genre_name = ref("");
+const genre_id = ref(0);
 const is_showing_more = ref(false);
 
 const MenuCategoria = ref("movie");
@@ -21,11 +21,12 @@ const ordenarPeliculas = () => {
 };
 
 const route = useRoute();
-keyword_id.value = route.params.id;
+genre_id.value = route.params.id;
 
 const fetchKeywordMovies = async () => {
   let page = 1;
   let totalPages = 1;
+  movies.value = []; // Limpiar películas al cambiar categoría
 
   const myHeaders = new Headers();
   myHeaders.append(
@@ -39,9 +40,13 @@ const fetchKeywordMovies = async () => {
     redirect: "follow",
   };
 
-  while (page <= totalPages) {
+  while (page <= 5) {
+    const baseUrl = MenuCategoria.value === 'movie' 
+      ? `https://api.themoviedb.org/3/discover/movie`
+      : `https://api.themoviedb.org/3/discover/tv`;
+    
     const response = await fetch(
-      `https://api.themoviedb.org/3/discover/movie?with_keywords=${keyword_id.value}&page=${page}`,
+      `${baseUrl}?with_genre=${genre_id.value}&page=${page}`,
       requestOptions
     );
     const data = await response.json();
@@ -53,14 +58,15 @@ const fetchKeywordMovies = async () => {
     page++;
   }
 
-  ordenarPeliculas(); // Asegurarse de ordenar después de cargar todas las películas
+  ordenarPeliculas(); // Asegurar ordenación después de cargar todas las películas
+  is_showing_more.value = false; // Reset "Show More" button
 };
 
 const fetchKeywordData = async () => {
   const myHeaders = new Headers();
   myHeaders.append(
     "Authorization",
-    "Bearer eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiI5YTZiZDFhOTcyM2EzY2VhMDI2YTllMjUyMDQ2YjMxNiIsIm5iZiI6MTcyNzIyOTY5MC43OTM1OTQsInN1YiI6IjY2ZjJmNWYwYTk3ODgwMTQ4ZjNiOTBiNSIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.fZfgCHZz_ePmrG_w_m4-p4_wbnkBfoUD1N1DKRDDMh4"
+    "Bearer eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiI5YTZiZDFhOTcyM2EzY2VhMDI2YTllMjUyMDQ2YjMxNiIsIm5iOiI2NmYyZjVmMGE5Nzg4MDE0OGYzYjkwYjUiLCJzY29wZXMiOlsiYXBpX3JlYWQiXSwidmVyc2lvbiI6MX0.fZfgCHZz_ePmrG_w_m4-p4_wbnkBfoUD1N1DKRDDMh4"
   );
 
   const requestOptions = {
@@ -69,10 +75,10 @@ const fetchKeywordData = async () => {
     redirect: "follow",
   };
 
-  fetch(`https://api.themoviedb.org/3/keyword/${keyword_id.value}`, requestOptions)
+  fetch(`https://api.themoviedb.org/3/genre/${genre_id.value}`, requestOptions)
     .then((response) => response.json())
     .then((response) => {
-      keyword_name.value = response.name;
+      genre_name.value = response.name;
     });
 };
 
@@ -82,7 +88,15 @@ const moviesToShow = computed(() => {
     : movies.value.slice(0, Math.ceil(movies.value.length / 2));
 });
 
-// Reordenar películas cada vez que cambia el menú de orden o se modifica la lista de películas
+// Observar cambios en MenuCategoria y recargar películas
+watch(MenuCategoria, fetchKeywordMovies);
+
+const goToTV = () => {};
+const goToMovies = (genreId) => {
+  router.push({ path: `/movie/${genreId}` });
+};
+
+// Reordenar películas cuando cambie el menú de orden o se modifique la lista de películas
 watch([MenuOrden, movies], ordenarPeliculas);
 
 onMounted(async () => {
@@ -91,45 +105,42 @@ onMounted(async () => {
 });
 </script>
 
-
 <template>
+  <div class="header-section">
+    <h1>{{ genre_name }}</h1>
+    <h1>{{ total_results }}</h1>
+  </div>
 
-    <div class="header-section">
-        <h1>{{ keyword_name }}</h1>
-        <h1>{{ total_results }}</h1>
+  <div class="menu-section">
+    <label>
+      <select v-model="MenuCategoria">
+        <option value="movie">Películas</option>
+        <option value="tv">Series</option>
+      </select>
+    </label>
+
+    <label>
+      <select v-model="MenuOrden">
+        <option value="ascendente">Orden ascendente</option>
+        <option value="descendente">Orden descendente</option>
+      </select>
+    </label>
+  </div>
+
+  <div class="content-section">
+    <div v-for="(movie, index) in moviesToShow" :key="index">
+      <MovieCard
+        :backdrop_path="movie.backdrop_path"
+        :title="movie.title"
+        :release_date="movie.release_date"
+        :overview="movie.overview"
+      />
     </div>
 
-    <div class="menu-section">
-      <label>
-        <select v-model="MenuCategoria">
-          <option value="movie">Películas</option>
-          <option value="tv">Series</option>
-        </select>
-      </label>
-
-      <label>
-        <select v-model="MenuOrden">
-          <option value="ascendente">Orden ascendente</option>
-          <option value="descendente">Orden descendente</option>
-        </select>
-      </label>
+    <div v-if="!is_showing_more">
+      <button type="button" @click="is_showing_more = true">Show More</button>
     </div>
-
-    <div class="content-section">
-        <div v-for="movie in moviesToShow">
-            <MovieCard 
-                :backdrop_path="movie.backdrop_path"
-                :title="movie.title"
-                :release_date="movie.release_date"
-                :overview="movie.overview"
-            />
-        </div>
-
-        <div v-if="!is_showing_more">
-            <button type="button" @click="is_showing_more = true">Show More</button>
-        </div>
-    </div>    
-
+  </div>
 </template>
 
 <style scoped>
