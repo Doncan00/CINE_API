@@ -2,7 +2,6 @@
 import MovieCard from "@/components/KeywordResults/MovieCard.vue";
 import { ref, onMounted, computed, watch } from "vue";
 import { useRoute } from "vue-router";
-import MovieCard from "../components/KeywordResults/MovieCard.vue";
 
 const movies = ref([]);
 const total_results = ref(0);
