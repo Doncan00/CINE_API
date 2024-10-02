@@ -1,13 +1,14 @@
 <script setup>
 
-    import { ref, onMounted } from "vue"
-    import { useRoute } from "vue-router";
+    import { ref, onMounted, watch } from "vue"
+    import { useRoute, useRouter } from "vue-router";
 
     const recomendations = ref([]);
 
     const movie_id = ref(0)
 
     const route = useRoute()
+    const router = useRouter()
     movie_id.value = route.params.id
 
     const fetchRecomendations = async () => {
@@ -27,20 +28,24 @@
         })
     }
 
-    onMounted(() => {
-        fetchRecomendations();
+    onMounted( async () => {
+        await fetchRecomendations();
     })
 
+    const goToMovie = (genreId) => {
+
+        window.location.href = `/movie-details/${genreId}`;
+    }
 
 </script>
 
 <template>
     <div class="recomendations">
-        <div class="recomendation-card" v-for="recomendation in recomendations">
-            <img :src="'https://image.tmdb.org/t/p/w500' + recomendation.backdrop_path" alt="">
-            <h2>{{ recomendation.title }}</h2>
-            <h2>{{ recomendation.vote_average }}</h2>
-        </div>
+        <button @click="goToMovie(recomendation.id)" class="recomendation-card" v-for="recomendation in recomendations">
+                <img :src="'https://image.tmdb.org/t/p/w500' + recomendation.backdrop_path" alt="">
+                <h2>{{ recomendation.title }}</h2>
+                <h2>{{ recomendation.vote_average }}</h2>
+        </button>
     </div>
 </template>
 

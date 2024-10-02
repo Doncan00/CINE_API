@@ -1,12 +1,13 @@
 <script setup>
     import { ref, onMounted } from 'vue';
-    import { useRoute } from 'vue-router';
+    import { useRoute, useRouter } from 'vue-router';
 
     const principal_cast = ref([])
 
     const movie_id = ref(0)
 
     const route = useRoute()
+    const router = useRouter()
     movie_id.value = route.params.id
 
     onMounted( async () => {
@@ -43,6 +44,10 @@
 
     })
 
+    const goToActor = (actorId) => {
+        
+        router.push({ path: `/artist-details/${actorId}`})
+    }
 
 </script>
 
@@ -52,9 +57,12 @@
         <h1>Reparto principal</h1>
         <div class="cast">
             <div class="cast-card" v-for="person in principal_cast">
-                <img :src="'https://image.tmdb.org/t/p/w500' + person.profile_path" alt="">
-                <h1>{{ person.name }}</h1>
-                <h2>{{ person.character }}</h2>
+                <button @click="goToActor(person.id)">
+                    
+                    <img :src="'https://image.tmdb.org/t/p/w500' + person.profile_path" alt="">
+                    <h1>{{ person.name }}</h1>
+                    <h2>{{ person.character }}</h2>
+                </button>
             </div>
         </div>
         <a href="">Reparto y equipo completo</a>

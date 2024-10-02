@@ -1,7 +1,7 @@
 <script setup>
 
     import { ref, onMounted } from "vue";
-    import { useRoute } from "vue-router";
+    import { useRoute, useRouter } from "vue-router";
 
     const title = ref('')
     const poster_path = ref('')
@@ -21,6 +21,7 @@
     const movie_id = ref(0)
 
     const route = useRoute()
+    const router = useRouter()
     movie_id.value = route.params.id
 
     onMounted( async () => {
@@ -132,6 +133,18 @@
         }
     })    
 
+    const goToCredit = (creditId) => {
+        
+        router.push({ path: `/artist-details/${creditId}`})
+    }
+
+    const goToGenre = (genreId) => {
+
+        router.push({ path: `/genre/${genreId}`})
+    }
+
+
+
 </script>
 
 <template>
@@ -152,7 +165,7 @@
                 <h1>{{ certification }}</h1>
                 <h1>{{ release_date }}</h1> 
                 <h1>({{ country }})</h1>
-                <a href="" v-for="genre in genres">{{ genre }}</a>
+                <button v-for="genre in genres" @click="goToGenre(genre.id)">{{ genre }}</button>
                 <h1>{{ runtime }}</h1>
             </div>
             
@@ -169,11 +182,11 @@
             
             <div class="director-screenplay">
                 <div class="directors" v-for="director in directors">
-                    <a href="">{{ director.name }}</a>
+                    <button @click="goToCredit(director.id)">{{ director.name }}</button>
                     <h2>director</h2>
                 </div>
                 <div class="screenplayers" v-for="screenplayer in screenplayers">
-                    <a href="">{{ screenplayer.name }}</a>
+                    <button @click="goToCredit(screenplayer.id)">{{ screenplayer.name }}</button>
                     <h2>Screenplay</h2>
                 </div>
             </div> 

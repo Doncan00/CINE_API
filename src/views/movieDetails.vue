@@ -44,6 +44,10 @@
                 </div>
     
                 <div class="gray-line"></div>
+
+                <div class="recomendation-section">
+                    <RecomendationSection />
+                </div>
             </div>
              
             <div class="information-right-side">
@@ -52,11 +56,6 @@
                     <InformationResume />
                 </div>
     
-                <div class="gray-line"></div>
-            
-                <div class="score-contributors-section">
-                    <ScoreContributors />
-                </div>
             
             </div>
     

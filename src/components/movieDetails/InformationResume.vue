@@ -1,7 +1,7 @@
 <script setup>
     
     import { ref, onMounted } from 'vue';
-    import { useRoute } from "vue-router";
+    import { useRoute, useRouter } from "vue-router";
 
     const original_title = ref('')
     const status = ref('')
@@ -17,6 +17,7 @@
     const movie_id = ref(0)
 
     const route = useRoute()
+    const router = useRouter()
     movie_id.value = route.params.id
 
     const fetchInformation = async () => {

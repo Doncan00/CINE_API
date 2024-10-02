@@ -35,7 +35,7 @@
                 videos.value.push(response.results[i])
             }
 
-            mostPopularVideo.value = response.results[0].name 
+            mostPopularVideo.value = response.results[0].key
         })
     }
 
@@ -111,7 +111,7 @@
         <div class="media-content">
             <div class="more-popular" v-if="midia_showing == 0">
                 <div>
-                    {{ mostPopularVideo }}
+                    <iframe width="560" height="315" :src="`https://www.youtube.com/embed/${mostPopularVideo}`" frameborder="0" allowfullscreen></iframe>
                 </div>
                 <div>
                     <img :src="'https://image.tmdb.org/t/p/w500' + mostPopularImage.file_path" alt="">
@@ -122,7 +122,7 @@
             </div>
             <div class="videos" v-if="midia_showing == 1">
                 <div v-for="video in videos">
-                    videos
+                    <iframe width="560" height="315" :src="`https://www.youtube.com/embed/${video.key}`" frameborder="0" allowfullscreen></iframe>
                 </div>
             </div>
             <div class="bg-imgs" v-if="midia_showing == 2">
