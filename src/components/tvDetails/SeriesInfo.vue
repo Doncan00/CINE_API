@@ -81,8 +81,8 @@
           <h2>Temporadas:</h2>
           <ul>
     <div class="multimedia-grid">
-      <div class="keyword-card" v-for="season in serieInfo.seasons" :key="season.id"
-           @click="goToSeasonInfo(season.id)">
+      <div class="keyword-card" v-for="season in serieInfo.seasons" :key="season.season_number"
+           @click="goToSeasonInfo(season.season_number)">
         {{ season.name }}
       </div>
     </div>
@@ -253,9 +253,9 @@ export default {
         console.error("Error al obtener las recomendaciones:", error);
       }
     },
-    goToSeasonInfo(seasonId) {
+    goToSeasonInfo(season_number) {
     const serieId = this.serieInfo.id;
-    this.$router.push({ path: `/series-details/${serieId}/season/${seasonId}` });
+    this.$router.push({ path: `/series-details/${serieId}/season/${season_number}` });
   }
 
   },
