@@ -1,13 +1,7 @@
 <script setup>
-<<<<<<< HEAD
 import { ref, onMounted, computed, watch } from "vue";
 import { useRoute } from "vue-router";
 import MovieCard from "../components/KeywordResults/MovieCard.vue";
-=======
-    import { ref, onMounted, computed, watch } from "vue";
-    import { useRoute } from "vue-router";
-    import MovieCard from "@/components/KeywordResults/MovieCard.vue";
->>>>>>> ed4bbb983dcb08f0e8a6262d661a6b7579dcea5e
 
 const movies = ref([]);
 const total_results = ref(0);
