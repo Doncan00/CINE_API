@@ -104,6 +104,8 @@ import KeyWordsService from "../tvDetails/services/keyWordsService";
 import VideoTeaserService from "../tvDetails/services/videoTeaserService";
 import RecommendationsService from "../tvDetails/services/recommendationsService";
 
+import { useRoute } from "vue-router";
+
 export default {
   data() {
     return {
@@ -135,6 +137,10 @@ export default {
     this.recommendationsService = new RecommendationsService();
   },
   mounted() {
+
+    // const route = useRoute()
+    // const serieId = route.params.id;
+
     const serieId = 194764;
     this.fetchSerieInfo(serieId);
   },
