@@ -36,8 +36,6 @@
                 let date = new Date(result.created_at)
                 review_created_at.value = date.toISOString().split('T')[0];
                 
-               console.log(result);
-               
                 review_content.value = result.content;
 
             })
